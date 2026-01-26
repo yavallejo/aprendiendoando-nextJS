@@ -1,6 +1,7 @@
 import '@/styles/globals.css'
 import { rethinkSans, geist } from '@/lib/fonts'
 import { ThemeProvider } from '@/components/ThemeProvider'
+import { GSAPProvider } from '@/components/GSAPProvider'
 
 export default function App({ Component, pageProps }) {
   return (
@@ -11,7 +12,9 @@ export default function App({ Component, pageProps }) {
       disableTransitionOnChange
     >
       <div className={`${rethinkSans.variable} ${geist.variable} font-body`}>
-        <Component {...pageProps} />
+        <GSAPProvider>
+          <Component {...pageProps} />
+        </GSAPProvider>
       </div>
     </ThemeProvider>
   )
