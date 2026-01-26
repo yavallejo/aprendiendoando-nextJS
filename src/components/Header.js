@@ -1,83 +1,109 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { useTheme } from 'next-themes'
 import { ThemeToggle } from './ThemeToggle'
-import { cn } from '@/lib/utils'
+import { Menu, X } from 'lucide-react'
 
 const navigation = [
   { name: 'Sobre mi', href: '#sobre-mi' },
   { name: 'Videos', href: '#videos' },
-  { name: 'Cursos Premium', href: '#cursos-premium' },
+  { name: 'Cursos', href: '#cursos-premium' },
   { name: 'Contacto', href: '#contacto' },
 ]
 
 export function Header() {
-  const { theme } = useTheme()
+  const [isScrolled, setIsScrolled] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const handleNavClick = (e, href) => {
     e.preventDefault()
+    setIsMobileMenuOpen(false)
     const element = document.querySelector(href)
     if (element) {
       const headerOffset = 80
       const elementPosition = element.getBoundingClientRect().top
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth',
-      })
+      window.scrollTo({ top: offsetPosition, behavior: 'smooth' })
     }
   }
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center justify-between px-4">
-        <Link
-          href="/"
-          className="text-xl font-heading font-bold text-foreground hover:opacity-80 transition-opacity"
-          onClick={(e) => {
-            e.preventDefault()
-            window.scrollTo({ top: 0, behavior: 'smooth' })
-          }}
-        >
-          aprendiendoando
-        </Link>
-
-        <nav className="hidden md:flex items-center gap-6">
-          {navigation.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              onClick={(e) => handleNavClick(e, item.href)}
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-            >
-              {item.name}
-            </Link>
-          ))}
-        </nav>
-
-        <div className="flex items-center gap-4">
-          <ThemeToggle />
-          
-          {/* Mobile menu button - to be implemented */}
-          <button
-            className="md:hidden inline-flex items-center justify-center rounded-md p-2 text-muted-foreground hover:text-foreground hover:bg-accent"
-            aria-label="Toggle menu"
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? 'bg-background/80 backdrop-blur-xl border-b border-border/50'
+          : 'bg-transparent'
+      }`}
+    >
+      <div className="max-w-6xl mx-auto px-6">
+        <div className="flex h-16 items-center justify-between">
+          {/* Logo */}
+          <Link
+            href="/"
+            onClick={(e) => {
+              e.preventDefault()
+              window.scrollTo({ top: 0, behavior: 'smooth' })
+            }}
+            className="text-lg font-semibold tracking-tight text-foreground hover:opacity-70 transition-opacity"
           >
-            <svg
-              className="h-6 w-6"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+            aprendiendoando
+          </Link>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center gap-1">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                onClick={(e) => handleNavClick(e, item.href)}
+                className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors rounded-full hover:bg-accent/50"
+              >
+                {item.name}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Actions */}
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            
+            {/* Mobile menu button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden p-2 text-muted-foreground hover:text-foreground transition-colors"
+              aria-label="Toggle menu"
             >
-              <path d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
+              {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
         </div>
+
+        {/* Mobile Navigation */}
+        {isMobileMenuOpen && (
+          <nav className="md:hidden py-4 border-t border-border/50">
+            <div className="flex flex-col gap-1">
+              {navigation.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  onClick={(e) => handleNavClick(e, item.href)}
+                  className="px-4 py-3 text-sm text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-accent/50"
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </div>
+          </nav>
+        )}
       </div>
     </header>
   )
