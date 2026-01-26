@@ -370,23 +370,27 @@ NEXT_PUBLIC_YOUTUBE_CHANNEL_ID=@aprendiendoando
 6. ✅ Configurar ShadCN UI y Tailwind
 7. ✅ Consultar Context7 para `_app.js` - providers y fuentes
 8. ✅ Crear Theme Provider y configurar dark/light mode
+9. ✅ Crear componentes base (Header, ThemeToggle)
+10. ✅ Consultar Context7 para API Routes
+11. ✅ Implementar API route para YouTube
+12. ✅ Crear sección About
+13. ✅ Crear sección YouTube
+14. ✅ Crear sección Cursos Premium
+15. ✅ Crear formulario de contacto
+16. ✅ Consultar Context7 para GSAP
+17. ✅ Integrar GSAP para smooth scroll y animaciones
+18. ✅ Aplicar estilos dark mode consistentes
 
 ### 🚧 En Progreso
 
-9. 🚧 Crear componentes base (Header, ThemeToggle)
+_Ninguna tarea en progreso actualmente_
 
 ### ⏳ Pendiente
 
-10. Consultar Context7 para API Routes
-11. Implementar API route para YouTube
-12. Crear sección About
-13. Crear sección YouTube
-14. Crear sección Cursos Premium
-15. Crear formulario de contacto
-16. Consultar Context7 para GSAP
-17. Integrar GSAP para smooth scroll y animaciones
-18. Aplicar estilos dark mode consistentes
 19. Testing responsive y ajustes finales
+20. Configurar YouTube API Key (cuando esté disponible)
+21. Agregar datos de cursos premium
+22. Implementar funcionalidad de envío de email en formulario de contacto
 
 ### 📝 Notas de Implementación
 
@@ -398,3 +402,5 @@ NEXT_PUBLIC_YOUTUBE_CHANNEL_ID=@aprendiendoando
 ### 🔄 Historial de Commits
 
 - `feat: setup project with Tailwind, ShadCN UI, fonts and theme provider` - Configuración inicial del proyecto
+- `feat: add header, sections and GSAP scroll animations` - Creación de todas las secciones principales y animaciones
+- `style: enhance dark mode styling with darker background` - Mejora de estilos dark mode
