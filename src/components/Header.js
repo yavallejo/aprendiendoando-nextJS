@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, startTransition } from 'react'
 import Link from 'next/link'
 import { gsap } from 'gsap'
 import { ThemeToggle } from './ThemeToggle'
@@ -31,9 +31,11 @@ export function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > STICKY_SCROLL_THRESHOLD)
+      startTransition(() => {
+        setIsScrolled(window.scrollY > STICKY_SCROLL_THRESHOLD)
+      })
     }
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 

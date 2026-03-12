@@ -1,25 +1,16 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import useSWR from 'swr'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Youtube, Users, Play, ExternalLink } from 'lucide-react'
 
-export function YouTubeSection() {
-  const [subscriberCount, setSubscriberCount] = useState(null)
-  const [videos, setVideos] = useState([])
-  const [loading, setLoading] = useState(true)
+const fetcher = (url) => fetch(url).then((res) => res.json())
 
-  useEffect(() => {
-    fetch('/api/youtube')
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.subscriberCount) setSubscriberCount(data.subscriberCount)
-        if (data.videos) setVideos(data.videos)
-        setLoading(false)
-      })
-      .catch(() => setLoading(false))
-  }, [])
+export function YouTubeSection() {
+  const { data, isLoading } = useSWR('/api/youtube', fetcher)
+  const subscriberCount = data?.subscriberCount ?? null
+  const videos = data?.videos ?? []
 
   // Placeholder videos for when API is not configured
   const placeholderVideos = [
@@ -54,7 +45,7 @@ export function YouTubeSection() {
 
           {/* Subscriber count & CTA */}
           <div className="flex flex-col items-start md:items-end gap-4">
-            {subscriberCount && (
+            {subscriberCount != null ? (
               <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-accent/30 border border-border/50">
                 <Users size={18} className="text-muted-foreground" />
                 <span className="text-lg font-semibold text-foreground">
@@ -62,7 +53,7 @@ export function YouTubeSection() {
                 </span>
                 <span className="text-sm text-muted-foreground">subscribers</span>
               </div>
-            )}
+            ) : null}
             <Button
               asChild
               className="h-11 px-6 rounded-full bg-red-600 hover:bg-red-700 text-white"

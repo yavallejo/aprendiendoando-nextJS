@@ -38,36 +38,38 @@ export default async function handler(req, res) {
       })
     }
 
-    // Get channel statistics
-    const statsResponse = await fetch(
-      `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${channelId}&key=${apiKey}`
-    )
+    // Fetch stats and videos in parallel (no dependency between them)
+    const [statsResponse, videosResponse] = await Promise.all([
+      fetch(
+        `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${channelId}&key=${apiKey}`
+      ),
+      fetch(
+        `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&type=video&order=date&maxResults=6&key=${apiKey}`
+      ),
+    ])
 
     if (!statsResponse.ok) {
       throw new Error('Failed to fetch channel statistics')
     }
-
-    const statsData = await statsResponse.json()
-    const subscriberCount = parseInt(
-      statsData.items?.[0]?.statistics?.subscriberCount || 0
-    )
-
-    // Get latest videos
-    const videosResponse = await fetch(
-      `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&type=video&order=date&maxResults=6&key=${apiKey}`
-    )
-
     if (!videosResponse.ok) {
       throw new Error('Failed to fetch videos')
     }
 
-    const videosData = await videosResponse.json()
-    const videos = videosData.items?.map((item) => ({
-      id: item.id.videoId,
-      title: item.snippet.title,
-      thumbnail: item.snippet.thumbnails.medium.url,
-      publishedAt: item.snippet.publishedAt,
-    })) || []
+    const [statsData, videosData] = await Promise.all([
+      statsResponse.json(),
+      videosResponse.json(),
+    ])
+
+    const subscriberCount = parseInt(
+      statsData.items?.[0]?.statistics?.subscriberCount || 0
+    )
+    const videos =
+      videosData.items?.map((item) => ({
+        id: item.id.videoId,
+        title: item.snippet.title,
+        thumbnail: item.snippet.thumbnails.medium.url,
+        publishedAt: item.snippet.publishedAt,
+      })) || []
 
     return res.status(200).json({
       subscriberCount,

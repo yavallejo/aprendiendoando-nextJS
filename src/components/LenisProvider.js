@@ -12,6 +12,7 @@ const EASING = (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
 
 export function LenisProvider({ children }) {
   const lenisRef = useRef(null)
+  const tickerCallbackRef = useRef(null)
   const router = useRouter()
 
   useEffect(() => {
@@ -38,13 +39,15 @@ export function LenisProvider({ children }) {
     // GSAP integration: ScrollTrigger and ticker for scroll-linked animations
     gsap.registerPlugin(ScrollTrigger)
     lenis.on('scroll', ScrollTrigger.update)
-    gsap.ticker.add((time) => {
+    const tickerCallback = (time) => {
       lenis.raf(time * 1000)
-    })
+    }
+    tickerCallbackRef.current = tickerCallback
+    gsap.ticker.add(tickerCallback)
     gsap.ticker.lagSmoothing(0)
 
     return () => {
-      gsap.ticker.remove((time) => lenis.raf(time * 1000))
+      gsap.ticker.remove(tickerCallbackRef.current)
       lenis.destroy()
       lenisRef.current = null
     }
