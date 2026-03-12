@@ -40,26 +40,26 @@ export function ContactSection() {
   }
 
   return (
-    <section id="contacto" className="relative py-32">
+    <section id="contact" className="relative py-32">
       <div className="max-w-6xl mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-16 items-start">
           {/* Left side - Info */}
           <div>
             <span className="inline-block px-4 py-1.5 mb-6 text-xs font-medium uppercase tracking-wider text-muted-foreground border border-border/50 rounded-full">
-              Contacto
+              Contact
             </span>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
               <span className="dark:gradient-text gradient-text-light">
-                Trabajemos
+                Let&apos;s work
               </span>
               <br />
               <span className="text-muted-foreground">
-                juntos
+                together
               </span>
             </h2>
             <p className="text-lg text-muted-foreground mb-12 max-w-md">
-              ¿Tienes un proyecto interesante o necesitas un desarrollador frontend? 
-              Me encantaría escucharte.
+              Do you have an interesting project or need a frontend developer? 
+              I&apos;d love to hear from you.
             </p>
 
             {/* Contact options */}
@@ -71,7 +71,7 @@ export function ContactSection() {
                 <div>
                   <h3 className="font-medium text-foreground mb-1">Email</h3>
                   <p className="text-muted-foreground">
-                    Respondo en menos de 24 horas
+                    I typically respond within 24 hours
                   </p>
                 </div>
               </div>
@@ -81,9 +81,9 @@ export function ContactSection() {
                   <MessageSquare size={22} />
                 </div>
                 <div>
-                  <h3 className="font-medium text-foreground mb-1">Proyectos Freelance</h3>
+                  <h3 className="font-medium text-foreground mb-1">Freelance Projects</h3>
                   <p className="text-muted-foreground">
-                    Disponible para proyectos remotos
+                    Available for remote projects
                   </p>
                 </div>
               </div>
@@ -96,7 +96,7 @@ export function ContactSection() {
               <div className="grid sm:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <Label htmlFor="name" className="text-sm font-medium">
-                    Nombre
+                    Name
                   </Label>
                   <Input
                     id="name"
@@ -105,7 +105,7 @@ export function ContactSection() {
                     required
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="Tu nombre"
+                    placeholder="Your name"
                     className="h-12 bg-background/50 border-border/50 focus:border-foreground/50"
                   />
                 </div>
@@ -121,7 +121,7 @@ export function ContactSection() {
                     required
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="tu@email.com"
+                    placeholder="you@example.com"
                     className="h-12 bg-background/50 border-border/50 focus:border-foreground/50"
                   />
                 </div>
@@ -129,7 +129,7 @@ export function ContactSection() {
 
               <div className="space-y-2">
                 <Label htmlFor="company" className="text-sm font-medium">
-                  Empresa <span className="text-muted-foreground">(opcional)</span>
+                  Company <span className="text-muted-foreground">(optional)</span>
                 </Label>
                 <Input
                   id="company"
@@ -137,14 +137,14 @@ export function ContactSection() {
                   type="text"
                   value={formData.company}
                   onChange={handleChange}
-                  placeholder="Nombre de tu empresa"
+                  placeholder="Your company name"
                   className="h-12 bg-background/50 border-border/50 focus:border-foreground/50"
                 />
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="message" className="text-sm font-medium">
-                  Mensaje
+                  Message
                 </Label>
                 <Textarea
                   id="message"
@@ -152,7 +152,7 @@ export function ContactSection() {
                   required
                   value={formData.message}
                   onChange={handleChange}
-                  placeholder="Cuéntame sobre tu proyecto o idea..."
+                  placeholder="Tell me about your project or idea..."
                   rows={5}
                   className="bg-background/50 border-border/50 focus:border-foreground/50 resize-none"
                 />
@@ -162,31 +162,31 @@ export function ContactSection() {
               {submitStatus === 'success' && (
                 <div className="flex items-center gap-3 p-4 rounded-xl bg-green-500/10 border border-green-500/20 text-green-600 dark:text-green-400">
                   <CheckCircle size={20} />
-                  <span>¡Mensaje enviado! Te contactaré pronto.</span>
+                  <span>Message sent! I&apos;ll get back to you soon.</span>
                 </div>
               )}
 
               {submitStatus === 'error' && (
                 <div className="flex items-center gap-3 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400">
                   <AlertCircle size={20} />
-                  <span>Error al enviar. Por favor, intenta de nuevo.</span>
+                  <span>There was an error sending your message. Please try again.</span>
                 </div>
               )}
 
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full h-12 rounded-full bg-foreground text-background hover:bg-foreground/90 transition-all"
+                className="w-full h-12 rounded-full bg-foreground text-background hover:bg-foreground/90"
               >
                 {isSubmitting ? (
                   <span className="flex items-center gap-2">
                     <span className="w-4 h-4 border-2 border-background/30 border-t-background rounded-full animate-spin" />
-                    Enviando...
+                    Sending...
                   </span>
                 ) : (
                   <span className="flex items-center gap-2">
                     <Send size={18} />
-                    Enviar mensaje
+                    Send message
                   </span>
                 )}
               </Button>

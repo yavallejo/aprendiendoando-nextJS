@@ -1,11 +1,21 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import { gsap } from 'gsap'
 import { Button } from '@/components/ui/button'
 import { Youtube, ArrowRight } from 'lucide-react'
 
+// Split text into words for SplitText-style animation (no premium plugin)
+function splitWords(text) {
+  return text.trim().split(/\s+/).filter(Boolean)
+}
+
 export function HeroSection() {
   const heroRef = useRef(null)
+  const headlineRef = useRef(null)
+  const sublineRef = useRef(null)
+  const subheadlineRef = useRef(null)
+  const animRef = useRef(null)
 
   useEffect(() => {
     const hero = heroRef.current
@@ -23,10 +33,46 @@ export function HeroSection() {
     return () => hero.removeEventListener('mousemove', handleMouseMove)
   }, [])
 
+  // SplitText-style entrance: animate words with stagger
+  useEffect(() => {
+    const headline = headlineRef.current
+    const subline = sublineRef.current
+    const subheadline = subheadlineRef.current
+    if (!headline || !subline || !subheadline) return
+
+    const headlineWords = headline.querySelectorAll('.hero-word')
+    const sublineWords = subline.querySelectorAll('.hero-word')
+    const subheadlineWords = subheadline.querySelectorAll('.hero-word')
+
+    const allWords = [...headlineWords, ...sublineWords, ...subheadlineWords]
+    if (allWords.length === 0) return
+
+    const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReducedMotion) {
+      gsap.set(allWords, { opacity: 1, y: 0 })
+      return
+    }
+
+    // Solo opacity en subheadline para no desplazar y que overflow-hidden no recorte el texto
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
+    tl.fromTo(headlineWords, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.04 })
+      .fromTo(sublineWords, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.55, stagger: 0.035 }, '-=0.35')
+      .fromTo(subheadlineWords, { opacity: 0 }, { opacity: 1, duration: 0.5, stagger: 0.03 }, '-=0.25')
+
+    animRef.current = tl
+
+    return () => {
+      // Crítico: restaurar visibilidad antes de matar (evita texto invisible con React Strict Mode)
+      gsap.set(allWords, { opacity: 1, y: 0 })
+      tl.kill()
+      animRef.current = null
+    }
+  }, [])
+
   return (
     <section
       ref={heroRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pb-8"
       style={{
         background: `
           radial-gradient(
@@ -39,9 +85,9 @@ export function HeroSection() {
     >
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background to-background pointer-events-none" />
-      
+
       {/* Subtle grid */}
-      <div 
+      <div
         className="absolute inset-0 opacity-[0.02]"
         style={{
           backgroundImage: `
@@ -59,24 +105,29 @@ export function HeroSection() {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
           </span>
-          <span className="text-sm text-muted-foreground">+11 años de experiencia</span>
+          <span className="text-sm text-muted-foreground">11+ years of experience</span>
         </div>
 
-        {/* Main headline */}
+        {/* Main headline — SplitText-style: words wrapped for stagger animation */}
         <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 leading-[0.95]">
-          <span className="dark:gradient-text gradient-text-light">
-            Aprende desarrollo web
+          <span ref={headlineRef} className="dark:gradient-text gradient-text-light inline-block">
+            {splitWords('Learn web development').map((word, i) => (
+              <span key={i} className="hero-word inline-block mr-[0.2em]">{word}</span>
+            ))}
           </span>
           <br />
-          <span className="text-muted-foreground">
-            haciendo proyectos reales
+          <span ref={sublineRef} className="text-muted-foreground inline-block">
+            {splitWords('by building real projects').map((word, i) => (
+              <span key={i} className="hero-word inline-block mr-[0.2em]">{word}</span>
+            ))}
           </span>
         </h1>
 
-        {/* Subheadline */}
-        <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed">
-          Comunidad de desarrolladores donde compartimos conocimiento, 
-          creamos cursos prácticos y construimos proyectos listos para producción.
+        {/* Subheadline — word split for entrance */}
+        <p ref={subheadlineRef} className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed">
+          {splitWords('A developer community: practical courses, real projects, and knowledge shared so you can ship to production.').map((word, i) => (
+            <span key={i} className="hero-word inline-block mr-[0.25em]">{word}</span>
+          ))}
         </p>
 
         {/* CTA buttons */}
@@ -84,27 +135,27 @@ export function HeroSection() {
           <Button
             asChild
             size="lg"
-            className="h-12 px-8 text-base rounded-full bg-foreground text-background hover:bg-foreground/90 transition-all hover:scale-105"
+            className="h-12 px-8 text-base rounded-full bg-foreground text-background hover:bg-foreground/90 transition-[background-color,transform] duration-200 ease-[cubic-bezier(0.33,1,0.68,1)] hover:scale-105 active:scale-[0.98]"
           >
             <a
-              href="https://www.youtube.com/@aprendiendoando?sub_confirmation=1"
+              href="https://www.youtube.com/@AprendiendoAndo?sub_confirmation=1"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2"
             >
               <Youtube size={20} />
-              Suscríbete al canal
+              Subscribe to the channel
             </a>
           </Button>
           <Button
             variant="ghost"
             size="lg"
-            className="h-12 px-8 text-base rounded-full text-muted-foreground hover:text-foreground"
+            className="h-12 px-8 text-base rounded-full text-muted-foreground hover:text-foreground transition-[color,transform] duration-200 ease-out hover:scale-[1.02]"
             onClick={() => {
-              document.querySelector('#cursos-premium')?.scrollIntoView({ behavior: 'smooth' })
+              document.querySelector('#premium-courses')?.scrollIntoView({ behavior: 'smooth' })
             }}
           >
-            Ver cursos
+            View courses
             <ArrowRight size={18} className="ml-2" />
           </Button>
         </div>
@@ -113,16 +164,16 @@ export function HeroSection() {
         <div className="mt-20 pt-12 border-t border-border/30">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
-              { value: '11+', label: 'Años de experiencia' },
-              { value: '6+', label: 'Países remotos' },
-              { value: '1000+', label: 'Estudiantes' },
-              { value: '50+', label: 'Videos publicados' },
+              { value: '11+', label: 'Years of experience' },
+              { value: '6+', label: 'Remote countries' },
+              { value: '1000+', label: 'Students' },
+              { value: '50+', label: 'Published videos' },
             ].map((stat, index) => (
               <div key={index} className="text-center">
                 <div className="text-3xl md:text-4xl font-bold text-foreground mb-1">
                   {stat.value}
                 </div>
-                <div className="text-sm text-muted-foreground">
+                <div className="text-sm text-muted-foreground capitalize">
                   {stat.label}
                 </div>
               </div>

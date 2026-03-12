@@ -1,10 +1,10 @@
-// Estructura de datos para cursos premium
-// Los datos se agregarán después
+// Data structure for premium courses
+// Data will be added later
 export const courses = [
-  // Ejemplo de estructura:
+  // Example structure:
   // {
   //   id: 1,
-  //   title: "Curso de Ejemplo",
+  //   title: "Example Course",
   //   image: "/images/course1.jpg",
   //   students: 1000,
   //   positiveReviews: 95,

@@ -1,6 +1,6 @@
 ---
-name: Aprendiendoando Website
-overview: Crear un sitio web SPA moderno y elegante para "aprendiendoando" con diseño dark mode first, integración con YouTube API, secciones de cursos premium y formulario de contacto, usando Next.js 16.1.4, ShadCN UI y GSAP para animaciones suaves.
+name: AprendiendoAndo Website
+overview: Crear un sitio web SPA moderno y elegante para "AprendiendoAndo" con diseño dark mode first, integración con YouTube API, secciones de cursos premium y formulario de contacto, usando Next.js 16.1.4, ShadCN UI y GSAP para animaciones suaves.
 todos:
   - id: setup-dependencies
     content: "Instalar dependencias: ShadCN UI, GSAP, next-themes, y librerías necesarias"
@@ -41,7 +41,7 @@ todos:
 isProject: false
 ---
 
-# Plan: Sitio Web Aprendiendoando
+# Plan: Sitio Web AprendiendoAndo
 
 ## ⚠️ REGLA NO NEGOCIABLE - Next.js 16.1.4
 
@@ -77,7 +77,7 @@ El sitio será una SPA (Single Page Application) con navegación por anchor link
 ### 1. Layout y Navegación
 
 - **Header Component** (`src/components/Header.js`)
-  - Logo "aprendiendoando" como texto estilizado a la izquierda (usando fuente Rethink Sans)
+  - Logo "AprendiendoAndo" como texto estilizado a la izquierda (usando fuente Rethink Sans)
   - Menú de navegación a la derecha: Sobre mi, Videos, Cursos Premium, Contacto
   - Toggle de tema (light/dark) con icono
   - Sticky header con transparencia
@@ -165,7 +165,7 @@ El sitio será una SPA (Single Page Application) con navegación por anchor link
 - Verificar si `getServerSideProps` / `getStaticProps` son la mejor opción o si hay alternativas más modernas
 
 - Crear API route `src/pages/api/youtube.js` (siguiendo documentación de Context7)
-  - Obtener channel ID desde `@aprendiendoando`
+  - Obtener channel ID desde `@AprendiendoAndo`
   - Fetch de últimos videos (máx 6-8)
   - Fetch de estadísticas del canal (subscriber count)
 - Usar el método de data fetching recomendado por Context7 para Next.js 16.1.4
@@ -270,7 +270,7 @@ export const courses = [
 
 ```env
 YOUTUBE_API_KEY=tu_api_key_aqui
-NEXT_PUBLIC_YOUTUBE_CHANNEL_ID=@aprendiendoando
+NEXT_PUBLIC_YOUTUBE_CHANNEL_ID=@AprendiendoAndo
 ```
 
 ## Uso de MCPs para Documentación Actualizada
@@ -351,7 +351,7 @@ NEXT_PUBLIC_YOUTUBE_CHANNEL_ID=@aprendiendoando
 
 ## 📋 Información Adicional Confirmada
 
-- **Logo**: Solo texto estilizado "aprendiendoando" (no imagen)
+- **Logo**: Solo texto estilizado "AprendiendoAndo" (no imagen)
 - **YouTube API Key**: Se configurará después (crear estructura lista para recibirla)
 - **Datos de Cursos Premium**: Se agregarán después (crear estructura de datos lista)
 - **Formulario de Contacto**: Enviar por email directo (implementar funcionalidad de envío por email)

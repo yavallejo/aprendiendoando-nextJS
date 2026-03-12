@@ -1,5 +1,5 @@
-// API Route para obtener datos de YouTube
-// Requiere YOUTUBE_API_KEY en .env.local
+// API route to fetch YouTube data
+// Requires YOUTUBE_API_KEY in .env.local
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') {
@@ -13,18 +13,18 @@ export default async function handler(req, res) {
     return res.status(200).json({
       subscriberCount: null,
       videos: [],
-      message: 'YouTube API key no configurada',
+      message: 'YouTube API key not configured',
     })
   }
 
   try {
-    // Primero obtener el channel ID desde el handle
+    // First get channel ID from handle
     const channelResponse = await fetch(
       `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${channelHandle}&type=channel&key=${apiKey}`
     )
 
     if (!channelResponse.ok) {
-      throw new Error('Error al obtener información del canal')
+      throw new Error('Failed to fetch channel information')
     }
 
     const channelData = await channelResponse.json()
@@ -34,17 +34,17 @@ export default async function handler(req, res) {
       return res.status(200).json({
         subscriberCount: null,
         videos: [],
-        message: 'Canal no encontrado',
+        message: 'Channel not found',
       })
     }
 
-    // Obtener estadísticas del canal
+    // Get channel statistics
     const statsResponse = await fetch(
       `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${channelId}&key=${apiKey}`
     )
 
     if (!statsResponse.ok) {
-      throw new Error('Error al obtener estadísticas del canal')
+      throw new Error('Failed to fetch channel statistics')
     }
 
     const statsData = await statsResponse.json()
@@ -52,13 +52,13 @@ export default async function handler(req, res) {
       statsData.items?.[0]?.statistics?.subscriberCount || 0
     )
 
-    // Obtener últimos videos
+    // Get latest videos
     const videosResponse = await fetch(
       `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&type=video&order=date&maxResults=6&key=${apiKey}`
     )
 
     if (!videosResponse.ok) {
-      throw new Error('Error al obtener videos')
+      throw new Error('Failed to fetch videos')
     }
 
     const videosData = await videosResponse.json()
@@ -74,9 +74,9 @@ export default async function handler(req, res) {
       videos,
     })
   } catch (error) {
-    console.error('Error en YouTube API:', error)
+    console.error('YouTube API error:', error)
     return res.status(500).json({
-      error: 'Error al obtener datos de YouTube',
+      error: 'Failed to fetch YouTube data',
       message: error.message,
     })
   }

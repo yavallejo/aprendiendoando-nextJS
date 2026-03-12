@@ -23,12 +23,12 @@ export function YouTubeSection() {
 
   // Placeholder videos for when API is not configured
   const placeholderVideos = [
-    { id: '1', title: 'Creando tu primer proyecto con Next.js 14', thumbnail: null, publishedAt: '2024-01-15' },
-    { id: '2', title: 'Tailwind CSS: Tips y trucos avanzados', thumbnail: null, publishedAt: '2024-01-10' },
-    { id: '3', title: 'React Server Components explicados', thumbnail: null, publishedAt: '2024-01-05' },
-    { id: '4', title: 'Desplegando aplicaciones en Vercel', thumbnail: null, publishedAt: '2024-01-01' },
-    { id: '5', title: 'TypeScript para principiantes', thumbnail: null, publishedAt: '2023-12-28' },
-    { id: '6', title: 'Construye un portafolio profesional', thumbnail: null, publishedAt: '2023-12-20' },
+    { id: '1', title: 'Building your first project with Next.js 14', thumbnail: null, publishedAt: '2024-01-15' },
+    { id: '2', title: 'Tailwind CSS: Advanced tips and tricks', thumbnail: null, publishedAt: '2024-01-10' },
+    { id: '3', title: 'React Server Components explained', thumbnail: null, publishedAt: '2024-01-05' },
+    { id: '4', title: 'Deploying applications on Vercel', thumbnail: null, publishedAt: '2024-01-01' },
+    { id: '5', title: 'TypeScript for beginners', thumbnail: null, publishedAt: '2023-12-28' },
+    { id: '6', title: 'Build a professional portfolio', thumbnail: null, publishedAt: '2023-12-20' },
   ]
 
   const displayVideos = videos.length > 0 ? videos : placeholderVideos
@@ -44,11 +44,11 @@ export function YouTubeSection() {
             </span>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4">
               <span className="dark:gradient-text gradient-text-light">
-                Últimos videos
+                Latest videos
               </span>
             </h2>
             <p className="text-lg text-muted-foreground max-w-xl">
-              Contenido gratuito sobre desarrollo web, tutoriales y tips para mejorar tus habilidades.
+              Free web development tutorials and tips to level up your skills. New videos on React, Next.js, and frontend tools.
             </p>
           </div>
 
@@ -60,7 +60,7 @@ export function YouTubeSection() {
                 <span className="text-lg font-semibold text-foreground">
                   {subscriberCount.toLocaleString()}
                 </span>
-                <span className="text-sm text-muted-foreground">suscriptores</span>
+                <span className="text-sm text-muted-foreground">subscribers</span>
               </div>
             )}
             <Button
@@ -68,13 +68,13 @@ export function YouTubeSection() {
               className="h-11 px-6 rounded-full bg-red-600 hover:bg-red-700 text-white"
             >
               <a
-                href="https://www.youtube.com/@aprendiendoando?sub_confirmation=1"
+                href="https://www.youtube.com/@AprendiendoAndo?sub_confirmation=1"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2"
               >
                 <Youtube size={18} />
-                Suscribirme
+                Subscribe
                 <ExternalLink size={14} />
               </a>
             </Button>
@@ -86,7 +86,7 @@ export function YouTubeSection() {
           {displayVideos.slice(0, 6).map((video, index) => (
             <a
               key={video.id}
-              href={videos.length > 0 ? `https://www.youtube.com/watch?v=${video.id}` : 'https://www.youtube.com/@aprendiendoando'}
+              href={videos.length > 0 ? `https://www.youtube.com/watch?v=${video.id}` : 'https://www.youtube.com/@AprendiendoAndo'}
               target="_blank"
               rel="noopener noreferrer"
               className="group"
@@ -98,17 +98,17 @@ export function YouTubeSection() {
                     <img
                       src={video.thumbnail}
                       alt={video.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-[cubic-bezier(0.33,1,0.68,1)]"
                     />
                   ) : (
                     <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-accent to-accent/50">
                       <Play size={40} className="text-muted-foreground/50" />
                     </div>
                   )}
-                  
+
                   {/* Play overlay */}
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/30 transition-colors">
-                    <div className="w-14 h-14 flex items-center justify-center rounded-full bg-white/90 text-black opacity-0 group-hover:opacity-100 transition-all transform scale-75 group-hover:scale-100">
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/30 transition-colors duration-300 ease-out">
+                    <div className="w-14 h-14 flex items-center justify-center rounded-full bg-white/90 text-black opacity-0 group-hover:opacity-100 group-hover:scale-100 transform scale-90 transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.33,1,0.68,1)]">
                       <Play size={24} fill="currentColor" />
                     </div>
                   </div>
@@ -120,7 +120,7 @@ export function YouTubeSection() {
                     {video.title}
                   </h3>
                   <p className="text-sm text-muted-foreground">
-                    {new Date(video.publishedAt).toLocaleDateString('es-ES', {
+                    {new Date(video.publishedAt).toLocaleDateString('en-US', {
                       year: 'numeric',
                       month: 'short',
                       day: 'numeric',
@@ -140,12 +140,12 @@ export function YouTubeSection() {
             className="text-muted-foreground hover:text-foreground"
           >
             <a
-              href="https://www.youtube.com/@aprendiendoando"
+              href="https://www.youtube.com/@AprendiendoAndo"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2"
             >
-              Ver todos los videos
+              View all videos
               <ExternalLink size={16} />
             </a>
           </Button>

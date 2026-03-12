@@ -4,17 +4,17 @@ import Link from 'next/link'
 import { Youtube, Twitter, Github, Linkedin } from 'lucide-react'
 
 const socialLinks = [
-  { name: 'YouTube', icon: Youtube, href: 'https://www.youtube.com/@aprendiendoando' },
-  { name: 'Twitter', icon: Twitter, href: 'https://twitter.com/aprendiendoando' },
-  { name: 'GitHub', icon: Github, href: 'https://github.com/aprendiendoando' },
-  { name: 'LinkedIn', icon: Linkedin, href: 'https://linkedin.com/in/aprendiendoando' },
+  { name: 'YouTube', icon: Youtube, href: 'https://www.youtube.com/@AprendiendoAndo' },
+  { name: 'Twitter', icon: Twitter, href: 'https://twitter.com/AprendiendoAndo' },
+  { name: 'GitHub', icon: Github, href: 'https://github.com/AprendiendoAndo' },
+  { name: 'LinkedIn', icon: Linkedin, href: 'https://linkedin.com/in/AprendiendoAndo' },
 ]
 
 const navigation = [
-  { name: 'Sobre mi', href: '#sobre-mi' },
+  { name: 'About me', href: '#about-me' },
   { name: 'Videos', href: '#videos' },
-  { name: 'Cursos', href: '#cursos-premium' },
-  { name: 'Contacto', href: '#contacto' },
+  { name: 'Courses', href: '#premium-courses' },
+  { name: 'Contact', href: '#contact' },
 ]
 
 export function Footer() {
@@ -38,12 +38,12 @@ export function Footer() {
                 e.preventDefault()
                 window.scrollTo({ top: 0, behavior: 'smooth' })
               }}
-              className="text-lg font-semibold text-foreground hover:opacity-70 transition-opacity"
+              className="text-lg font-semibold text-foreground hover:opacity-80 transition-[opacity,transform] duration-200 ease-out hover:scale-[1.02] active:scale-[0.98]"
             >
-              aprendiendoando
+              AprendiendoAndo
             </Link>
             <p className="mt-3 text-sm text-muted-foreground">
-              Comunidad de desarrolladores aprendiendo y creciendo juntos.
+              Developer community learning and growing together.
             </p>
           </div>
 
@@ -54,7 +54,7 @@ export function Footer() {
                 key={item.name}
                 href={item.href}
                 onClick={(e) => handleNavClick(e, item.href)}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 ease-out"
               >
                 {item.name}
               </Link>
@@ -69,7 +69,7 @@ export function Footer() {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 flex items-center justify-center rounded-full text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-all"
+                className="w-10 h-10 flex items-center justify-center rounded-full text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-[color,background-color,transform] duration-200 ease-out hover:scale-110 active:scale-95"
                 aria-label={social.name}
               >
                 <social.icon size={18} />
@@ -81,10 +81,10 @@ export function Footer() {
         {/* Bottom */}
         <div className="mt-12 pt-8 border-t border-border/30 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} aprendiendoando. Todos los derechos reservados.
+            © {new Date().getFullYear()} AprendiendoAndo. All rights reserved.
           </p>
           <p className="text-sm text-muted-foreground">
-            Hecho con <span className="text-red-500">♥</span> para la comunidad
+            Made with <span className="text-red-500">♥</span> for the community
           </p>
         </div>
       </div>

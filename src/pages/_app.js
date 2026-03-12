@@ -1,6 +1,8 @@
 import '@/styles/globals.css'
 import { rethinkSans, geist } from '@/lib/fonts'
 import { ThemeProvider } from '@/components/ThemeProvider'
+import { ThemeTransition } from '@/components/ThemeTransition'
+import { LenisProvider } from '@/components/LenisProvider'
 import { GSAPProvider } from '@/components/GSAPProvider'
 
 export default function App({ Component, pageProps }) {
@@ -12,9 +14,12 @@ export default function App({ Component, pageProps }) {
       disableTransitionOnChange
     >
       <div className={`${rethinkSans.variable} ${geist.variable} font-body`}>
-        <GSAPProvider>
-          <Component {...pageProps} />
-        </GSAPProvider>
+        <LenisProvider>
+          <GSAPProvider>
+            <Component {...pageProps} />
+            <ThemeTransition />
+          </GSAPProvider>
+        </LenisProvider>
       </div>
     </ThemeProvider>
   )

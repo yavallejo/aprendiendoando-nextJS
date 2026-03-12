@@ -1,87 +1,88 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
+// Anchor links (#section) and smooth scroll are handled by Lenis (LenisProvider with anchors)
 export function useSmoothScroll() {
-  useEffect(() => {
-    // Smooth scroll for anchor links using native smooth scroll
-    // GSAP animations will be handled separately for scroll-triggered animations
-    const handleAnchorClick = (e) => {
-      const href = e.target.closest('a')?.getAttribute('href')
-      if (href && href.startsWith('#')) {
-        const target = document.querySelector(href)
-        if (target) {
-          e.preventDefault()
-          const headerOffset = 80
-          const elementPosition = target.getBoundingClientRect().top
-          const offsetPosition = elementPosition + window.pageYOffset - headerOffset
+  // Reserved for additional logic if needed; Lenis already handles anchors
+}
 
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth',
-          })
-        }
-      }
-    }
+// Patrón tipo machone: ScrollTrigger + Lenis para animaciones de entrada al viewport.
+// gsap.set inicial + timeline con scrollTrigger asegura sync con el scroll suave.
+const EASE = 'power2.out'
+const Y = 24
 
-    // Add event listener to all anchor links
-    const links = document.querySelectorAll('a[href^="#"]')
-    links.forEach((link) => {
-      link.addEventListener('click', handleAnchorClick)
-    })
+function reveal(trigger, build, startPos = 'top 85%') {
+  const el = typeof trigger === 'string' ? document.querySelector(trigger) : trigger
+  if (!el) return null
 
-    return () => {
-      links.forEach((link) => {
-        link.removeEventListener('click', handleAnchorClick)
-      })
-    }
-  }, [])
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: el,
+      start: startPos,
+      toggleActions: 'play none none none',
+      once: true,
+    },
+  })
+  build(tl, el)
+  return tl
 }
 
 export function useScrollAnimations() {
+  const timelinesRef = useRef([])
+
   useEffect(() => {
     if (typeof window === 'undefined') return
 
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -100px 0px',
-    }
+    gsap.registerPlugin(ScrollTrigger)
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          gsap.fromTo(
-            entry.target,
-            {
-              opacity: 0,
-              y: 50,
-            },
-            {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    function initAnimations() {
+      if (prefersReducedMotion) return
+
+      const sections = document.querySelectorAll('section')
+      sections.forEach((section, index) => {
+        // Saltar la primera sección (hero), ya tiene su propia animación
+        if (index === 0 || section.closest('[data-skip-reveal]')) return
+
+        const tl = reveal(
+          section,
+          (tl, el) => {
+            gsap.set(el, { opacity: 0, y: Y })
+            tl.to(el, {
               opacity: 1,
               y: 0,
               duration: 0.8,
-              ease: 'power2.out',
-            }
-          )
-          observer.unobserve(entry.target)
-        }
+              ease: EASE,
+            })
+          },
+          'top 88%'
+        )
+        if (tl) timelinesRef.current.push(tl)
       })
-    }, observerOptions)
 
-    // Observe all sections with a small delay to ensure DOM is ready
-    setTimeout(() => {
-      const sections = document.querySelectorAll('section')
-      sections.forEach((section) => {
-        observer.observe(section)
-      })
-    }, 100)
+      ScrollTrigger.refresh()
+    }
+
+    // Iniciar al montar (DOM ya tiene las secciones) y refrescar cuando termine load
+    initAnimations()
+    const onLoad = () => ScrollTrigger.refresh()
+    if (document.readyState !== 'complete') {
+      window.addEventListener('load', onLoad, { once: true })
+    }
+    const refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 400)
 
     return () => {
-      const sections = document.querySelectorAll('section')
-      sections.forEach((section) => {
-        observer.unobserve(section)
+      clearTimeout(refreshTimer)
+      window.removeEventListener('load', onLoad)
+      timelinesRef.current.forEach((tl) => {
+        tl.scrollTrigger?.kill()
+        tl.kill()
       })
+      timelinesRef.current = []
     }
   }, [])
 }

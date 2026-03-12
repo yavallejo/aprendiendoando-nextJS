@@ -6,49 +6,49 @@ const features = [
   {
     icon: Code2,
     title: 'Frontend Developer',
-    description: 'Más de 11 años construyendo interfaces web modernas y escalables.',
+    description: 'Over 11 years building modern, scalable web interfaces.',
   },
   {
     icon: Globe,
-    title: 'Experiencia Global',
-    description: 'Trabajo remoto con equipos de Perú, México, USA, Austria, Costa Rica y Colombia.',
+    title: 'Global Experience',
+    description: 'Remote work with teams from Peru, Mexico, USA, Austria, Costa Rica, and Colombia.',
   },
   {
     icon: Users,
-    title: 'Comunidad WordPress',
-    description: 'Organizador de la comunidad WordPress local, compartiendo conocimiento cada mes.',
+    title: 'WordPress Community',
+    description: 'Organizer of the local WordPress community, sharing knowledge every month.',
   },
   {
     icon: Rocket,
-    title: 'Enseñar Haciendo',
-    description: 'Cursos prácticos donde construyes proyectos reales listos para producción.',
+    title: 'Teaching by Doing',
+    description: 'Hands-on courses where you build real, production-ready projects.',
   },
 ]
 
 export function AboutSection() {
   return (
-    <section id="sobre-mi" className="relative py-32 overflow-hidden">
+    <section id="about-me" className="relative py-32 overflow-hidden">
       {/* Background accent */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-radial from-accent/20 to-transparent rounded-full blur-3xl pointer-events-none" />
-      
+
       <div className="relative max-w-6xl mx-auto px-6">
         {/* Section header */}
         <div className="text-center mb-20">
           <span className="inline-block px-4 py-1.5 mb-6 text-xs font-medium uppercase tracking-wider text-muted-foreground border border-border/50 rounded-full">
-            Sobre mí
+            About me
           </span>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
             <span className="dark:gradient-text gradient-text-light">
-              Apasionado por el
+              Passionate about the
             </span>
             <br />
             <span className="text-muted-foreground">
-              mundo digital
+              digital world
             </span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Fundador de <strong className="text-foreground">aprendiendoando</strong>, 
-            una comunidad donde compartimos conocimiento y crecemos juntos como desarrolladores.
+            Founder of <strong className="text-foreground">AprendiendoAndo</strong>,
+            a community where we share knowledge and grow together as developers. React, Next.js, WordPress, and modern frontend.
           </p>
         </div>
 
@@ -80,9 +80,7 @@ export function AboutSection() {
         <div className="relative p-8 md:p-12 rounded-3xl bg-gradient-to-br from-accent/30 to-transparent border border-border/30">
           <div className="absolute top-6 left-8 text-6xl text-muted-foreground/20 font-serif">"</div>
           <blockquote className="relative z-10 text-xl md:text-2xl text-foreground/90 leading-relaxed max-w-3xl mx-auto text-center italic">
-            Mi meta es dar a mis estudiantes la capacidad de construir sitios 
-            totalmente calificados para entrar en el mercado laboral, tomando 
-            en cuenta las tendencias y mejores prácticas del desarrollo web moderno.
+            My goal is to equip students with the skills to build job-ready sites and apps using modern web development trends and best practices.
           </blockquote>
         </div>
       </div>

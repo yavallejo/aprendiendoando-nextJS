@@ -11,7 +11,7 @@
 2. **Crear un nuevo proyecto (o seleccionar uno existente)**
    - Click en el selector de proyectos (arriba)
    - Click en "Nuevo proyecto"
-   - Nombre: "Aprendiendoando Website" (o el que prefieras)
+   - Nombre: "AprendiendoAndo Website" (o el que prefieras)
    - Click en "Crear"
 
 3. **Habilitar YouTube Data API v3**
@@ -54,7 +54,7 @@
 
 ### Endpoints utilizados:
 
-1. **Buscar canal por handle**: `@aprendiendoando`
+1. **Buscar canal por handle**: `@AprendiendoAndo`
 2. **Obtener estadísticas**: Subscriber count
 3. **Obtener videos**: Últimos videos ordenados por fecha
 
@@ -128,10 +128,10 @@ Crea un archivo `.env.local` en la raíz del proyecto:
 YOUTUBE_API_KEY=tu_api_key_de_youtube_aqui
 
 # Opcional: Si quieres especificar el canal
-NEXT_PUBLIC_YOUTUBE_CHANNEL_ID=@aprendiendoando
+NEXT_PUBLIC_YOUTUBE_CHANNEL_ID=@AprendiendoAndo
 ```
 
-**IMPORTANTE**: 
+**IMPORTANTE**:
 - El archivo `.env.local` ya está en `.gitignore`
 - Nunca subas tu API key a Git
 - Para producción, configura las variables en tu plataforma de hosting (Vercel, Netlify, etc.)

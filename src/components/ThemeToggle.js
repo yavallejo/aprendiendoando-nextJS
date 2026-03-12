@@ -23,10 +23,12 @@ export function ThemeToggle() {
   return (
     <button
       onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-      className="w-9 h-9 flex items-center justify-center rounded-full text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-all"
-      aria-label="Cambiar tema"
+      className="group w-9 h-9 flex items-center justify-center rounded-full text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-[color,background-color,transform] duration-200 ease-[cubic-bezier(0.33,1,0.68,1)] hover:scale-110 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+      aria-label="Toggle theme"
     >
-      {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+      <span className="transition-transform duration-200 group-hover:rotate-12 inline-block" aria-hidden>
+        {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+      </span>
     </button>
   )
 }
