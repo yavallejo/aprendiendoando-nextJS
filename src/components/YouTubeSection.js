@@ -34,7 +34,7 @@ export function YouTubeSection() {
   const displayVideos = videos.length > 0 ? videos : placeholderVideos
 
   return (
-    <section id="videos" className="relative py-32">
+    <section id="videos" className="relative py-12 md:py-16">
       <div className="max-w-6xl mx-auto px-6">
         {/* Section header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-16">
@@ -42,7 +42,7 @@ export function YouTubeSection() {
             <span className="inline-block px-4 py-1.5 mb-6 text-xs font-medium uppercase tracking-wider text-muted-foreground border border-border/50 rounded-full">
               YouTube
             </span>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
               <span className="dark:gradient-text gradient-text-light">
                 Latest videos
               </span>
@@ -133,7 +133,7 @@ export function YouTubeSection() {
         </div>
 
         {/* View all link */}
-        <div className="mt-12 text-center">
+        <div className="mt-10 text-center">
           <Button
             asChild
             variant="ghost"

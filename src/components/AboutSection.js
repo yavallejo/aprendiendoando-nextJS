@@ -27,13 +27,13 @@ const features = [
 
 export function AboutSection() {
   return (
-    <section id="about-me" className="relative py-32 overflow-hidden">
+    <section id="about-me" className="relative py-12 md:py-16 overflow-hidden">
       {/* Background accent */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-radial from-accent/20 to-transparent rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative max-w-6xl mx-auto px-6">
         {/* Section header */}
-        <div className="text-center mb-20">
+        <div className="text-center mb-16">
           <span className="inline-block px-4 py-1.5 mb-6 text-xs font-medium uppercase tracking-wider text-muted-foreground border border-border/50 rounded-full">
             About me
           </span>
@@ -53,7 +53,7 @@ export function AboutSection() {
         </div>
 
         {/* Features grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
           {features.map((feature, index) => (
             <div
               key={index}

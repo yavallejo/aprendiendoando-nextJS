@@ -40,13 +40,13 @@ export function CoursesSection() {
   const displayCourses = courses.length > 0 ? courses : placeholderCourses
 
   return (
-    <section id="premium-courses" className="relative py-32">
+    <section id="premium-courses" className="relative py-12 md:py-16">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-accent/5 to-transparent pointer-events-none" />
       
       <div className="relative max-w-6xl mx-auto px-6">
         {/* Section header */}
-        <div className="text-center mb-20">
+        <div className="text-center mb-16">
           <span className="inline-flex items-center gap-2 px-4 py-1.5 mb-6 text-xs font-medium uppercase tracking-wider text-muted-foreground border border-border/50 rounded-full">
             <Sparkles size={14} />
             Premium Courses
@@ -66,7 +66,7 @@ export function CoursesSection() {
         </div>
 
         {/* Courses grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {displayCourses.map((course, index) => (
             <Card
               key={course.id}
@@ -140,7 +140,7 @@ export function CoursesSection() {
 
         {/* Note */}
         {courses.length === 0 && (
-          <p className="mt-12 text-center text-sm text-muted-foreground">
+          <p className="mt-10 text-center text-sm text-muted-foreground">
             * The courses shown are examples. Real courses will be added soon.
           </p>
         )}

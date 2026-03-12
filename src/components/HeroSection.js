@@ -2,13 +2,18 @@
 
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Button } from '@/components/ui/button'
 import { Youtube, ArrowRight } from 'lucide-react'
 
-// Split text into words for SplitText-style animation (no premium plugin)
-function splitWords(text) {
-  return text.trim().split(/\s+/).filter(Boolean)
-}
+const STATS = [
+  { num: 11, suffix: '+', label: 'Years of experience' },
+  { num: 6, suffix: '+', label: 'Remote countries' },
+  { num: 1000, suffix: '+', label: 'Students' },
+  { num: 50, suffix: '+', label: 'Published videos' },
+]
+
+gsap.registerPlugin(ScrollTrigger)
 
 export function HeroSection() {
   const heroRef = useRef(null)
@@ -16,6 +21,9 @@ export function HeroSection() {
   const sublineRef = useRef(null)
   const subheadlineRef = useRef(null)
   const animRef = useRef(null)
+  const statsRef = useRef(null)
+  const numberRefs = useRef([])
+  const countUpTrigger = useRef(null)
 
   useEffect(() => {
     const hero = heroRef.current
@@ -33,39 +41,80 @@ export function HeroSection() {
     return () => hero.removeEventListener('mousemove', handleMouseMove)
   }, [])
 
-  // SplitText-style entrance: animate words with stagger
+  // Animación por bloques: texto normal en el DOM (siempre visible), animamos solo los contenedores
   useEffect(() => {
     const headline = headlineRef.current
     const subline = sublineRef.current
     const subheadline = subheadlineRef.current
     if (!headline || !subline || !subheadline) return
 
-    const headlineWords = headline.querySelectorAll('.hero-word')
-    const sublineWords = subline.querySelectorAll('.hero-word')
-    const subheadlineWords = subheadline.querySelectorAll('.hero-word')
-
-    const allWords = [...headlineWords, ...sublineWords, ...subheadlineWords]
-    if (allWords.length === 0) return
+    const blocks = [headline, subline, subheadline]
 
     const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReducedMotion) {
-      gsap.set(allWords, { opacity: 1, y: 0 })
+      gsap.set(blocks, { opacity: 1, y: 0 })
       return
     }
 
-    // Solo opacity en subheadline para no desplazar y que overflow-hidden no recorte el texto
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
-    tl.fromTo(headlineWords, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.04 })
-      .fromTo(sublineWords, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.55, stagger: 0.035 }, '-=0.35')
-      .fromTo(subheadlineWords, { opacity: 0 }, { opacity: 1, duration: 0.5, stagger: 0.03 }, '-=0.25')
+    tl.from(headline, { opacity: 0, y: 24, duration: 0.7 })
+      .from(subline, { opacity: 0, y: 20, duration: 0.6 }, '-=0.4')
+      .from(subheadline, { opacity: 0, y: 16, duration: 0.6 }, '-=0.35')
 
     animRef.current = tl
 
     return () => {
-      // Crítico: restaurar visibilidad antes de matar (evita texto invisible con React Strict Mode)
-      gsap.set(allWords, { opacity: 1, y: 0 })
+      gsap.set(blocks, { opacity: 1, y: 0 })
       tl.kill()
       animRef.current = null
+    }
+  }, [])
+
+  // Count-up de stats cuando la sección entra en viewport
+  useEffect(() => {
+    const container = statsRef.current
+    if (!container) return
+
+    const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReducedMotion) return
+
+    const runCountUp = () => {
+      STATS.forEach((stat, i) => {
+        const el = numberRefs.current[i]
+        if (!el) return
+        const obj = { val: 0 }
+        gsap.to(obj, {
+          val: stat.num,
+          duration: 1.4,
+          ease: 'power2.out',
+          snap: { val: 1 },
+          onUpdate: () => {
+            el.textContent = Math.round(obj.val).toLocaleString() + stat.suffix
+          },
+        })
+      })
+    }
+
+    const alreadyInView = () => {
+      const rect = container.getBoundingClientRect()
+      return rect.top < window.innerHeight * 0.85
+    }
+
+    if (alreadyInView()) {
+      runCountUp()
+      return
+    }
+
+    countUpTrigger.current = ScrollTrigger.create({
+      trigger: container,
+      start: 'top 85%',
+      once: true,
+      onEnter: runCountUp,
+    })
+
+    return () => {
+      countUpTrigger.current?.kill()
+      countUpTrigger.current = null
     }
   }, [])
 
@@ -77,7 +126,7 @@ export function HeroSection() {
         background: `
           radial-gradient(
             600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-            rgba(120, 119, 198, 0.08),
+            hsl(var(--accent-brand) / 0.12),
             transparent 40%
           )
         `,
@@ -98,7 +147,7 @@ export function HeroSection() {
         }}
       />
 
-      <div className="relative z-10 max-w-5xl mx-auto px-6 py-32 text-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-24 md:py-28 text-center">
         {/* Badge */}
         <div className="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full border border-border/50 bg-accent/30 backdrop-blur-sm">
           <span className="relative flex h-2 w-2">
@@ -108,26 +157,19 @@ export function HeroSection() {
           <span className="text-sm text-muted-foreground">11+ years of experience</span>
         </div>
 
-        {/* Main headline — SplitText-style: words wrapped for stagger animation */}
+        {/* Headline y subheadline: texto plano en el DOM (siempre visible), animación por bloques */}
         <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 leading-[0.95]">
           <span ref={headlineRef} className="dark:gradient-text gradient-text-light inline-block">
-            {splitWords('Learn web development').map((word, i) => (
-              <span key={i} className="hero-word inline-block mr-[0.2em]">{word}</span>
-            ))}
+            Learn web development
           </span>
           <br />
           <span ref={sublineRef} className="text-muted-foreground inline-block">
-            {splitWords('by building real projects').map((word, i) => (
-              <span key={i} className="hero-word inline-block mr-[0.2em]">{word}</span>
-            ))}
+            by building real projects
           </span>
         </h1>
 
-        {/* Subheadline — word split for entrance */}
-        <p ref={subheadlineRef} className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed">
-          {splitWords('A developer community: practical courses, real projects, and knowledge shared so you can ship to production.').map((word, i) => (
-            <span key={i} className="hero-word inline-block mr-[0.25em]">{word}</span>
-          ))}
+        <p ref={subheadlineRef} className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-relaxed">
+          A developer community: practical courses, real projects, and knowledge shared so you can ship to production.
         </p>
 
         {/* CTA buttons */}
@@ -135,7 +177,7 @@ export function HeroSection() {
           <Button
             asChild
             size="lg"
-            className="h-12 px-8 text-base rounded-full bg-foreground text-background hover:bg-foreground/90 transition-[background-color,transform] duration-200 ease-[cubic-bezier(0.33,1,0.68,1)] hover:scale-105 active:scale-[0.98]"
+            className="h-12 px-8 text-base rounded-full bg-[hsl(var(--accent-brand))] text-[hsl(var(--accent-brand-foreground))] hover:opacity-90 transition-[opacity,transform] duration-200 ease-[cubic-bezier(0.33,1,0.68,1)] hover:scale-105 active:scale-[0.98]"
           >
             <a
               href="https://www.youtube.com/@AprendiendoAndo?sub_confirmation=1"
@@ -161,17 +203,14 @@ export function HeroSection() {
         </div>
 
         {/* Stats */}
-        <div className="mt-20 pt-12 border-t border-border/30">
+        <div ref={statsRef} className="mt-16 pt-10 border-t border-border/30">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {[
-              { value: '11+', label: 'Years of experience' },
-              { value: '6+', label: 'Remote countries' },
-              { value: '1000+', label: 'Students' },
-              { value: '50+', label: 'Published videos' },
-            ].map((stat, index) => (
+            {STATS.map((stat, index) => (
               <div key={index} className="text-center">
                 <div className="text-3xl md:text-4xl font-bold text-foreground mb-1">
-                  {stat.value}
+                  <span ref={(el) => { numberRefs.current[index] = el }}>
+                    0{stat.suffix}
+                  </span>
                 </div>
                 <div className="text-sm text-muted-foreground capitalize">
                   {stat.label}

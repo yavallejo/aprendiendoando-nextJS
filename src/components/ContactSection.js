@@ -40,9 +40,9 @@ export function ContactSection() {
   }
 
   return (
-    <section id="contact" className="relative py-32">
+    <section id="contact" className="relative py-12 md:py-16">
       <div className="max-w-6xl mx-auto px-6">
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
+        <div className="grid lg:grid-cols-2 gap-12 items-start">
           {/* Left side - Info */}
           <div>
             <span className="inline-block px-4 py-1.5 mb-6 text-xs font-medium uppercase tracking-wider text-muted-foreground border border-border/50 rounded-full">
@@ -57,7 +57,7 @@ export function ContactSection() {
                 together
               </span>
             </h2>
-            <p className="text-lg text-muted-foreground mb-12 max-w-md">
+            <p className="text-lg text-muted-foreground mb-10 max-w-md">
               Do you have an interesting project or need a frontend developer? 
               I&apos;d love to hear from you.
             </p>

@@ -4,7 +4,9 @@ import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { gsap } from 'gsap'
 import { ThemeToggle } from './ThemeToggle'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, Youtube } from 'lucide-react'
+
+const YOUTUBE_SUBSCRIBE_URL = 'https://www.youtube.com/@AprendiendoAndo?sub_confirmation=1'
 
 const navigation = [
   { name: 'About me', href: '#about-me' },
@@ -161,15 +163,15 @@ export function Header() {
         }`}
     >
       <div className="max-w-6xl mx-auto px-6">
-        <div className="flex h-16 items-center justify-between">
-          {/* Logo */}
+        <div className="flex h-16 items-center">
+          {/* Logo — same as before */}
           <Link
             href="/"
             onClick={(e) => {
               e.preventDefault()
               window.scrollTo({ top: 0, behavior: 'smooth' })
             }}
-            className="flex items-center gap-2 text-lg font-semibold tracking-tight text-foreground hover:opacity-80 transition-[opacity,transform] duration-200 ease-out hover:scale-[1.02] active:scale-[0.98]"
+            className="flex items-center gap-2 text-lg font-semibold tracking-tight text-foreground hover:opacity-80 transition-[opacity,transform] duration-200 ease-out hover:scale-[1.02] active:scale-[0.98] shrink-0"
           >
             <svg
               className="w-[1.65em] h-[1.65em] shrink-0"
@@ -186,55 +188,81 @@ export function Header() {
             <span>AprendiendoAndo</span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-1">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                onClick={(e) => handleNavClick(e, item.href)}
-                className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 ease-out rounded-full hover:bg-accent/50 active:scale-[0.98]"
-              >
-                {item.name}
-              </Link>
-            ))}
+          {/* Desktop Navigation — centered */}
+          <nav className="hidden md:flex flex-1 items-center justify-center">
+            <div className="flex items-center gap-1">
+              {navigation.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  onClick={(e) => handleNavClick(e, item.href)}
+                  className="nav-link group relative px-4 py-2.5 text-sm text-muted-foreground rounded-full
+                    transition-[color,background-color,transform] duration-300 ease-out
+                    hover:text-foreground hover:bg-accent/60 hover:-translate-y-0.5 hover:scale-[1.03]
+                    active:scale-[0.98] active:translate-y-0"
+                >
+                  <span className="relative z-10">{item.name}</span>
+                  <span
+                    className="absolute inset-0 rounded-full bg-accent/40 scale-0 opacity-0
+                      group-hover:scale-100 group-hover:opacity-100
+                      transition-[transform,opacity] duration-300 ease-out"
+                    aria-hidden
+                  />
+                  <span
+                    className="absolute bottom-1 left-1/2 -translate-x-1/2 z-1 h-0.5 rounded-full
+                      bg-[hsl(var(--accent-brand))] w-0 transition-[width] duration-300 ease-out
+                      group-hover:w-3/4"
+                    aria-hidden
+                  />
+                </Link>
+              ))}
+            </div>
           </nav>
 
-          {/* Actions */}
-          <div className="flex items-center gap-2">
+          {/* Actions: Subscribe (accent) + Theme + Mobile */}
+          <div className="flex flex-1 md:flex-none items-center justify-end gap-2">
+            <a
+              href={YOUTUBE_SUBSCRIBE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden sm:inline-flex items-center justify-center gap-2 h-10 px-4 rounded-xl text-sm font-medium transition-[color,background-color,transform] duration-200 ease-out hover:scale-[1.02] active:scale-[0.98] bg-[hsl(var(--accent-brand))] text-[hsl(var(--accent-brand-foreground))] hover:opacity-90"
+              aria-label="Suscribirse al canal de YouTube"
+            >
+              <Youtube size={18} aria-hidden />
+              Subscribe
+            </a>
             <ThemeToggle />
 
-            {/* Mobile menu button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 text-muted-foreground hover:text-foreground transition-[color,transform] duration-200 ease-out hover:scale-105 active:scale-95"
-            aria-label="Toggle menu"
+              className="md:hidden p-2 text-muted-foreground hover:text-foreground transition-[color,transform] duration-200 ease-out hover:scale-105 active:scale-95"
+              aria-label="Toggle menu"
             >
               {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>
 
-        {/* Mobile Navigation — always in DOM for GSAP, visibility controlled by animation */}
+        {/* Mobile Navigation — box contenedor a ancho completo del área de contenido */}
         <div
           ref={mobileNavWrapperRef}
-          className="md:hidden"
+          className="md:hidden -mx-6 w-[calc(100%+3rem)] max-w-none bg-background/95 backdrop-blur-md border-t border-border/50 shadow-[0_10px_40px_-12px_hsl(var(--foreground)/0.12)]"
           style={mobileNavInlineStyle}
           aria-hidden={!isMobileMenuOpen}
         >
           <nav
             ref={mobileNavRef}
-            className="border-t border-border/50 bg-background py-5 shadow-[0_8px_24px_-8px_hsl(var(--foreground)/0.08)]"
-            aria-label="Mobile menu"
+            className="w-full py-4 px-6"
+            aria-label="Menú principal"
           >
-            <div className="flex flex-col gap-0.5">
+            <div className="flex flex-col gap-1">
               {navigation.map((item, index) => (
                 <Link
                   key={item.name}
                   ref={(el) => { mobileNavItemsRef.current[index] = el }}
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item.href)}
-                  className="block px-4 py-3.5 text-base font-medium text-foreground rounded-lg hover:bg-accent/60 active:bg-accent/80 active:scale-[0.98] transition-colors duration-200 ease-out"
+                  className="block w-full px-4 py-3.5 text-base font-medium text-foreground rounded-xl bg-accent/30 hover:bg-accent/60 active:bg-accent/80 border border-transparent hover:border-border/50 transition-[background-color,border-color,transform] duration-200 ease-out active:scale-[0.99]"
                 >
                   {item.name}
                 </Link>
