@@ -42,7 +42,7 @@ export function CoursesSection() {
   return (
     <section id="premium-courses" className="relative py-12 md:py-16">
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-accent/5 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-linear-to-b from-transparent via-accent/5 to-transparent pointer-events-none" />
       
       <div className="relative max-w-6xl mx-auto px-6">
         {/* Section header */}
@@ -70,10 +70,10 @@ export function CoursesSection() {
           {displayCourses.map((course, index) => (
             <Card
               key={course.id}
-              className="group relative overflow-hidden bg-card/50 border-border/50 hover:border-border transition-all duration-300 card-hover"
+              className="group relative overflow-hidden bg-card/40 backdrop-blur-sm border-border/40 hover:border-accent/50 hover:shadow-2xl hover:shadow-accent/5 hover:-translate-y-1 transition-all duration-500"
             >
               {/* Course image/placeholder */}
-              <div className="relative aspect-[16/9] bg-gradient-to-br from-accent to-accent/30 overflow-hidden">
+              <div className="relative aspect-video bg-linear-to-br from-accent to-accent/30 overflow-hidden">
                 {course.image ? (
                   <img
                     src={course.image}

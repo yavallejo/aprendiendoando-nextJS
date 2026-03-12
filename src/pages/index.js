@@ -34,9 +34,9 @@ export default function Home() {
         <Header />
         <main>
           <HeroSection />
+          <CoursesSection />
           <AboutSection />
           <YouTubeSection />
-          <CoursesSection />
           <ContactSection />
         </main>
         <Footer />

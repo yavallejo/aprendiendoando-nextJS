@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Button } from '@/components/ui/button'
+import { BGPattern } from '@/components/ui/bg-pattern'
 import { Youtube, ArrowRight } from 'lucide-react'
 
 const STATS = [
@@ -126,26 +127,17 @@ export function HeroSection() {
         background: `
           radial-gradient(
             600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-            hsl(var(--accent-brand) / 0.12),
-            transparent 40%
+            hsl(var(--accent-brand) / 0.15),
+            transparent 45%
           )
         `,
       }}
     >
+      {/* Visual Pattern overlay. `bg-pattern.js` leverages native Next.js UI conventions via `shadcn/ui` */}
+      <BGPattern variant="grid" mask="fade-edges" fill="hsl(var(--accent-brand)/0.05)" />
+      
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background to-background pointer-events-none" />
-
-      {/* Subtle grid */}
-      <div
-        className="absolute inset-0 opacity-[0.02]"
-        style={{
-          backgroundImage: `
-            linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
-          `,
-          backgroundSize: '60px 60px',
-        }}
-      />
+      <div className="absolute inset-0 bg-linear-to-b from-transparent via-background to-background pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-24 md:py-28 text-center">
         {/* Badge */}
@@ -175,9 +167,20 @@ export function HeroSection() {
         {/* CTA buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Button
-            asChild
             size="lg"
             className="h-12 px-8 text-base rounded-full bg-[hsl(var(--accent-brand))] text-[hsl(var(--accent-brand-foreground))] hover:opacity-90 transition-[opacity,transform] duration-200 ease-[cubic-bezier(0.33,1,0.68,1)] hover:scale-105 active:scale-[0.98]"
+            onClick={() => {
+              document.querySelector('#premium-courses')?.scrollIntoView({ behavior: 'smooth' })
+            }}
+          >
+            View courses
+            <ArrowRight size={18} className="ml-2" />
+          </Button>
+          <Button
+            asChild
+            variant="ghost"
+            size="lg"
+            className="h-12 px-8 text-base rounded-full text-muted-foreground hover:text-foreground border border-border/50 bg-accent/5 transition-[color,transform] duration-200 ease-out hover:scale-[1.02]"
           >
             <a
               href="https://www.youtube.com/@AprendiendoAndo?sub_confirmation=1"
@@ -186,19 +189,8 @@ export function HeroSection() {
               className="flex items-center gap-2"
             >
               <Youtube size={20} />
-              Subscribe to the channel
+              YouTube channel
             </a>
-          </Button>
-          <Button
-            variant="ghost"
-            size="lg"
-            className="h-12 px-8 text-base rounded-full text-muted-foreground hover:text-foreground transition-[color,transform] duration-200 ease-out hover:scale-[1.02]"
-            onClick={() => {
-              document.querySelector('#premium-courses')?.scrollIntoView({ behavior: 'smooth' })
-            }}
-          >
-            View courses
-            <ArrowRight size={18} className="ml-2" />
           </Button>
         </div>
 
@@ -222,7 +214,7 @@ export function HeroSection() {
       </div>
 
       {/* Bottom fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-t from-background to-transparent pointer-events-none" />
     </section>
   )
 }
