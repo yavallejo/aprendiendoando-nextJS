@@ -43,7 +43,7 @@ export function YouTubeSection() {
             </p>
           </div>
 
-          {/* Subscriber count & CTA */}
+          {/* Subscriber count (CTA principal vive en el header sticky) */}
           <div className="flex flex-col items-start md:items-end gap-4">
             {subscriberCount != null ? (
               <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-accent/30 border border-border/50">
@@ -54,21 +54,6 @@ export function YouTubeSection() {
                 <span className="text-sm text-muted-foreground">suscriptores</span>
               </div>
             ) : null}
-            <Button
-              asChild
-              className="h-11 px-6 rounded-full bg-red-600 hover:bg-red-700 text-white"
-            >
-              <a
-                href="https://www.youtube.com/@AprendiendoAndo?sub_confirmation=1"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2"
-              >
-                <Youtube size={18} />
-                Suscribirme
-                <ExternalLink size={14} />
-              </a>
-            </Button>
           </div>
         </div>
 

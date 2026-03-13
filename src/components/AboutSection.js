@@ -56,7 +56,7 @@ export function AboutSection() {
 
           {/* Right Column: Content */}
           <div className="mt-8 lg:col-span-7 lg:mt-0">
-            <span className="inline-block px-4 py-1.5 mb-6 text-xs font-medium uppercase tracking-wider text-[hsl(var(--accent-brand-foreground))] border border-[hsl(var(--accent-brand))] bg-[hsl(var(--accent-brand))/10] rounded-full">
+            <span className="inline-block px-4 py-1.5 mb-6 text-xs font-semibold uppercase tracking-[0.18em] rounded-full shadow-sm border bg-[hsl(var(--accent-brand))] text-[hsl(var(--accent-brand-foreground))] border-[hsl(var(--accent-brand))]">
               Perfil del Creador
             </span>
 
