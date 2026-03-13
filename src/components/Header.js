@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, startTransition } from 'react'
 import Link from 'next/link'
 import { gsap } from 'gsap'
+import { SplitText } from 'gsap/SplitText'
 import { ThemeToggle } from './ThemeToggle'
 import { Menu, X, Youtube } from 'lucide-react'
 
@@ -28,6 +29,17 @@ export function Header() {
   const mobileMenuTlRef = useRef(null)
   const mobileMenuHasOpenedRef = useRef(false)
   const [mobileNavInlineStyle, setMobileNavInlineStyle] = useState(() => ({ overflow: 'hidden', height: 0, opacity: 0 }))
+
+  const logoRef = useRef(null)
+  const splitLogoRef = useRef(null)
+  const logoIntroTlRef = useRef(null)
+  const lastLogoIndexRef = useRef(-1)
+
+  // Registrar plugin SplitText una sola vez en cliente
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    gsap.registerPlugin(SplitText)
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -144,6 +156,116 @@ export function Header() {
     return () => mobileMenuTlRef.current?.kill()
   }, [isMobileMenuOpen])
 
+  // Cleanup logo animations on unmount
+  useEffect(() => {
+    return () => {
+      if (splitLogoRef.current) {
+        splitLogoRef.current.revert()
+        splitLogoRef.current = null
+      }
+      logoIntroTlRef.current?.kill()
+    }
+  }, [])
+
+  const handleLogoMouseEnter = () => {
+    if (typeof window === 'undefined') return
+    const target = logoRef.current
+    if (!target) return
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReducedMotion) return
+
+    if (!splitLogoRef.current) {
+      splitLogoRef.current = SplitText.create(target, {
+        type: 'chars',
+        charsClass: 'aa-logo-char',
+      })
+    }
+
+    const letters = splitLogoRef.current.chars || []
+    if (!letters || !letters.length) return
+
+    logoIntroTlRef.current?.kill()
+    gsap.set(letters, { transformOrigin: '50% 50%', willChange: 'transform, color, text-shadow' })
+
+    logoIntroTlRef.current = gsap.timeline({ defaults: { ease: 'power2.out' } })
+      .fromTo(
+        letters,
+        { y: 0, opacity: 0.9 },
+        {
+          y: -1.5,
+          opacity: 1,
+          duration: 0.45,
+          stagger: 0.03,
+        }
+      )
+      .to(
+        letters,
+        {
+          y: 0,
+          duration: 0.4,
+          stagger: 0.02,
+        },
+        '-=0.25'
+      )
+  }
+
+  const handleLogoMouseMove = (event) => {
+    if (typeof window === 'undefined') return
+    const target = logoRef.current
+    if (!target || !splitLogoRef.current) return
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReducedMotion) return
+
+    const letters = splitLogoRef.current.chars || []
+    if (!letters || !letters.length) return
+
+    const rect = target.getBoundingClientRect()
+    if (rect.width === 0) return
+
+    const x = event.clientX - rect.left
+    const ratio = Math.min(1, Math.max(0, x / rect.width))
+    const index = Math.min(letters.length - 1, Math.max(0, Math.round(ratio * (letters.length - 1))))
+
+    if (index === lastLogoIndexRef.current) return
+
+    const current = letters[index]
+    const previous = lastLogoIndexRef.current >= 0 ? letters[lastLogoIndexRef.current] : null
+    lastLogoIndexRef.current = index
+
+    if (previous && previous !== current) {
+      gsap.to(previous, {
+        y: 0,
+        duration: 0.35,
+        ease: 'power2.out',
+        overwrite: 'auto',
+      })
+    }
+
+    gsap.to(current, {
+      y: -2,
+      duration: 0.25,
+      ease: 'power2.out',
+      overwrite: 'auto',
+    })
+  }
+
+  const handleLogoMouseLeave = () => {
+    const letters = splitLogoRef.current?.chars || []
+    if (!letters || !letters.length) return
+
+    lastLogoIndexRef.current = -1
+    logoIntroTlRef.current?.kill()
+
+    gsap.to(letters, {
+      y: 0,
+      duration: 0.35,
+      ease: 'power2.out',
+      clearProps: 'will-change',
+    })
+  }
+
   const handleNavClick = (e, href) => {
     e.preventDefault()
     setIsMobileMenuOpen(false)
@@ -166,7 +288,7 @@ export function Header() {
     >
       <div className="max-w-6xl mx-auto px-6">
         <div className="flex h-16 items-center">
-          {/* Logo — same as before */}
+          {/* Logo con animación sutil al hover (GSAP) */}
           <Link
             href="/"
             onClick={(e) => {
@@ -174,6 +296,9 @@ export function Header() {
               window.scrollTo({ top: 0, behavior: 'smooth' })
             }}
             className="flex items-center gap-2 text-lg font-semibold tracking-tight text-foreground hover:opacity-80 transition-[opacity,transform] duration-200 ease-out hover:scale-[1.02] active:scale-[0.98] shrink-0"
+            onMouseEnter={handleLogoMouseEnter}
+            onMouseMove={handleLogoMouseMove}
+            onMouseLeave={handleLogoMouseLeave}
           >
             <svg
               className="w-[1.65em] h-[1.65em] shrink-0"
@@ -187,7 +312,9 @@ export function Header() {
               <path d="M7 9l3 3-3 3" strokeWidth="1.5" opacity="0.9" />
               <path d="M11 15h4" strokeWidth="1.5" opacity="0.9" />
             </svg>
-            <span>AprendiendoAndo</span>
+            <span ref={logoRef} className="relative inline-flex">
+              AprendiendoAndo
+            </span>
           </Link>
 
           {/* Desktop Navigation — centered */}

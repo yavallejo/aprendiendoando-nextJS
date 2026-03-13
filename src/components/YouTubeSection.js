@@ -51,7 +51,7 @@ export function YouTubeSection() {
                 <span className="text-lg font-semibold text-foreground">
                   {subscriberCount.toLocaleString()}
                 </span>
-                <span className="text-sm text-muted-foreground">subscribers</span>
+                <span className="text-sm text-muted-foreground">suscriptores</span>
               </div>
             ) : null}
             <Button
@@ -65,7 +65,7 @@ export function YouTubeSection() {
                 className="flex items-center gap-2"
               >
                 <Youtube size={18} />
-                Subscribe
+                Suscribirme
                 <ExternalLink size={14} />
               </a>
             </Button>
@@ -111,7 +111,7 @@ export function YouTubeSection() {
                     {video.title}
                   </h3>
                   <p className="text-sm text-muted-foreground">
-                    {new Date(video.publishedAt).toLocaleDateString('en-US', {
+                    {new Date(video.publishedAt).toLocaleDateString('es-ES', {
                       year: 'numeric',
                       month: 'short',
                       day: 'numeric',
@@ -136,7 +136,7 @@ export function YouTubeSection() {
               rel="noopener noreferrer"
               className="flex items-center gap-2"
             >
-              View all videos
+              Ver todos los videos
               <ExternalLink size={16} />
             </a>
           </Button>

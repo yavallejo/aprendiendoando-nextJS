@@ -129,7 +129,7 @@ export function CoursesSection() {
                     rel="noopener noreferrer"
                     className="flex items-center justify-center gap-2"
                   >
-                    View on Udemy
+                    Ver en Udemy
                     <ArrowUpRight size={16} />
                   </a>
                 </Button>
@@ -141,7 +141,7 @@ export function CoursesSection() {
         {/* Note */}
         {courses.length === 0 && (
           <p className="mt-10 text-center text-sm text-muted-foreground">
-            * The courses shown are examples. Real courses will be added soon.
+            * Los cursos mostrados son de ejemplo. Los cursos reales se añadirán pronto.
           </p>
         )}
       </div>

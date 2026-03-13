@@ -8,7 +8,7 @@ import { BGPattern } from '@/components/ui/bg-pattern'
 import { Youtube, ArrowRight } from 'lucide-react'
 
 const STATS = [
-  { num: 11, suffix: '+', label: 'Años de experiencia' },
+  { num: 13, suffix: '+', label: 'Años de experiencia' },
   { num: 6, suffix: '+', label: 'Países remotos' },
   { num: 12000, suffix: '+', label: 'Suscriptores' },
   { num: 300, suffix: '+', label: 'Videos publicados' },
@@ -146,7 +146,7 @@ export function HeroSection() {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
           </span>
-          <span className="text-sm text-muted-foreground">+11 años de experiencia</span>
+          <span className="text-sm text-muted-foreground">+13 años de experiencia</span>
         </div>
 
         {/* Headline y subheadline: texto plano en el DOM (siempre visible), animación por bloques */}
@@ -173,7 +173,7 @@ export function HeroSection() {
               document.querySelector('#premium-courses')?.scrollIntoView({ behavior: 'smooth' })
             }}
           >
-            View courses
+            Ver cursos
             <ArrowRight size={18} className="ml-2" />
           </Button>
           <Button
@@ -189,7 +189,7 @@ export function HeroSection() {
               className="flex items-center gap-2"
             >
               <Youtube size={20} />
-              YouTube channel
+              Canal de YouTube
             </a>
           </Button>
         </div>

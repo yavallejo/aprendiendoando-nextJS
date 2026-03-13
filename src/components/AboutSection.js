@@ -6,7 +6,7 @@ const features = [
   {
     icon: Code2,
     title: 'Desarrollador Web',
-    description: 'Más de 11 años creando soluciones web y flujos de trabajo eficientes.',
+    description: 'Más de 13 años creando soluciones web y flujos de trabajo eficientes.',
   },
   {
     icon: Globe,
@@ -27,63 +27,66 @@ const features = [
 
 export function AboutSection() {
   return (
-    <section id="about-me" className="relative py-12 md:py-24 overflow-hidden">
+    <section id="about-me" className="overflow-hidden relative py-12 md:py-24">
       {/* Background accent */}
       <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-radial from-accent/10 to-transparent rounded-full blur-3xl pointer-events-none" />
 
-      <div className="relative max-w-6xl mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-          
+      <div className="relative px-6 mx-auto max-w-6xl">
+        <div className="grid grid-cols-1 gap-12 items-center lg:grid-cols-12 lg:gap-16">
+
           {/* Left Column: Image & Badge */}
-          <div className="lg:col-span-5 relative">
-            <div className="relative aspect-square md:aspect-4/5 rounded-4xl overflow-hidden border border-border/30 bg-accent/5">
-              {/* Photo placeholder (Use <img> here when you have the picture) */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-muted-foreground/40 bg-linear-to-br from-accent/5 to-accent/20">
-                <Users size={48} className="mb-4 opacity-50" />
-                <span className="text-sm font-medium tracking-wide">[ Add Yan's Photo Here ]</span>
-              </div>
+          <div className="relative lg:col-span-5">
+            <div className="overflow-hidden relative border aspect-square md:aspect-4/5 rounded-4xl border-border/30 bg-accent/5">
+              <img
+                src="/yan-vallejo.jpg"
+                alt="Yan Vallejo en su espacio de trabajo"
+                className="w-full h-full object-cover scale-105 saturate-110 contrast-[1.05] brightness-105"
+              />
+              {/* Color overlay para armonizar con la paleta del sitio */}
+              <div className="absolute inset-0 to-transparent mix-blend-multiply pointer-events-none bg-linear-to-t from-background/60 via-background/10" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,hsl(var(--accent-brand))/0.35,transparent_55%)] mix-blend-soft-light pointer-events-none" />
             </div>
-            
+
             {/* Floating badge */}
-            <div className="absolute -bottom-6 -right-6 md:-right-8 p-6 rounded-2xl bg-card border border-border/50 shadow-xl backdrop-blur-sm -rotate-3 hover:rotate-0 transition-transform duration-300">
-               <div className="text-3xl font-bold text-foreground">11+</div>
-               <div className="text-sm text-muted-foreground font-medium">Years coding</div>
+            <div className="absolute -right-6 -bottom-6 p-6 rounded-2xl border shadow-xl backdrop-blur-sm transition-transform duration-300 -rotate-3 md:-right-8 bg-card border-border/50 hover:rotate-0">
+              <div className="text-3xl font-bold text-foreground">13+</div>
+              <div className="text-sm font-medium text-muted-foreground">Años programando</div>
             </div>
           </div>
 
           {/* Right Column: Content */}
-          <div className="lg:col-span-7 mt-8 lg:mt-0">
+          <div className="mt-8 lg:col-span-7 lg:mt-0">
             <span className="inline-block px-4 py-1.5 mb-6 text-xs font-medium uppercase tracking-wider text-[hsl(var(--accent-brand-foreground))] border border-[hsl(var(--accent-brand))] bg-[hsl(var(--accent-brand))/10] rounded-full">
               Perfil del Creador
             </span>
-            
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
+
+            <h2 className="mb-6 text-4xl font-bold tracking-tight md:text-5xl">
               <span className="dark:gradient-text gradient-text-light">
                 Hola, soy Yan Vallejo
               </span>
             </h2>
-            
-            <p className="text-lg text-muted-foreground mb-10 leading-relaxed">
-              Creador de <strong className="text-foreground">AprendiendoAndo</strong>. 
+
+            <p className="mb-10 text-lg leading-relaxed text-muted-foreground">
+              Creador de <strong className="text-foreground">AprendiendoAndo</strong>.
               Mi misión es compartirte el conjunto de herramientas exactas (workflows en Mac, terminal, Git, WordPress) que uso en el mundo real para que seas un desarrollador más eficiente.
             </p>
 
             {/* Features grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
               {features.map((feature, index) => (
                 <div
                   key={index}
-                  className="group relative p-6 rounded-2xl bg-card/50 border border-border/50 hover:border-border transition-all duration-300 card-hover"
+                  className="relative p-6 rounded-2xl border transition-all duration-300 group bg-card/50 border-border/50 hover:border-border card-hover"
                 >
-                  <div className="flex items-start gap-4">
-                    <div className="shrink-0 w-10 h-10 flex items-center justify-center rounded-xl bg-accent/50 text-foreground group-hover:bg-accent transition-colors">
+                  <div className="flex gap-4 items-start">
+                    <div className="flex justify-center items-center w-10 h-10 rounded-xl transition-colors shrink-0 bg-accent/50 text-foreground group-hover:bg-accent">
                       <feature.icon size={20} />
                     </div>
                     <div>
-                      <h3 className="text-base font-semibold text-foreground mb-1">
+                      <h3 className="mb-1 text-base font-semibold text-foreground">
                         {feature.title}
                       </h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed">
+                      <p className="text-sm leading-relaxed text-muted-foreground">
                         {feature.description}
                       </p>
                     </div>
@@ -92,7 +95,7 @@ export function AboutSection() {
               ))}
             </div>
           </div>
-          
+
         </div>
       </div>
     </section>
