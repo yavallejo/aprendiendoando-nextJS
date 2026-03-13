@@ -28,7 +28,6 @@ export function Header() {
   const mobileNavItemsRef = useRef([])
   const mobileMenuTlRef = useRef(null)
   const mobileMenuHasOpenedRef = useRef(false)
-  const [mobileNavInlineStyle, setMobileNavInlineStyle] = useState(() => ({ overflow: 'hidden', height: 0, opacity: 0 }))
 
   const logoRef = useRef(null)
   const splitLogoRef = useRef(null)
@@ -101,10 +100,8 @@ export function Header() {
     if (!isMobileMenuOpen && !mobileMenuHasOpenedRef.current) {
       gsap.set(wrapper, { height: 0, opacity: 0, overflow: 'hidden' })
       gsap.set(items, { opacity: 0, y: 12 })
-      setMobileNavInlineStyle((s) => ('height' in s ? { overflow: 'hidden' } : s))
       return
     }
-    setMobileNavInlineStyle((s) => ('height' in s ? { overflow: 'hidden' } : s))
 
     if (isMobileMenuOpen) {
       mobileMenuHasOpenedRef.current = true
@@ -376,7 +373,7 @@ export function Header() {
         <div
           ref={mobileNavWrapperRef}
           className="md:hidden -mx-6 w-[calc(100%+3rem)] max-w-none bg-background/95 backdrop-blur-md border-t border-border/50 shadow-[0_10px_40px_-12px_hsl(var(--foreground)/0.12)]"
-          style={mobileNavInlineStyle}
+          style={{ overflow: 'hidden' }}
           aria-hidden={!isMobileMenuOpen}
         >
           <nav
