@@ -18,9 +18,9 @@ export default async function handler(req, res) {
   }
 
   try {
-    // First get channel ID from handle
+    // First get channel ID from handle using the exact handle parameter
     const channelResponse = await fetch(
-      `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${channelHandle}&type=channel&key=${apiKey}`
+      `https://youtube.googleapis.com/youtube/v3/channels?part=snippet,statistics&forHandle=${channelHandle}&key=${apiKey}`
     )
 
     if (!channelResponse.ok) {
@@ -28,7 +28,13 @@ export default async function handler(req, res) {
     }
 
     const channelData = await channelResponse.json()
-    const channelId = channelData.items?.[0]?.snippet?.channelId
+    const channelItem = channelData.items?.[0]
+    const channelId = channelItem?.id
+    
+    // We already have the subscriber count from this request!
+    const directSubscriberCount = parseInt(
+      channelItem?.statistics?.subscriberCount || 0
+    )
 
     if (!channelId) {
       return res.status(200).json({
@@ -38,31 +44,18 @@ export default async function handler(req, res) {
       })
     }
 
-    // Fetch stats and videos in parallel (no dependency between them)
-    const [statsResponse, videosResponse] = await Promise.all([
-      fetch(
-        `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${channelId}&key=${apiKey}`
-      ),
-      fetch(
-        `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&type=video&order=date&maxResults=6&key=${apiKey}`
-      ),
-    ])
+    // Now we only need to fetch the videos, since we have the stats
+    const videosResponse = await fetch(
+      `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&type=video&order=date&maxResults=6&key=${apiKey}`
+    )
 
-    if (!statsResponse.ok) {
-      throw new Error('Failed to fetch channel statistics')
-    }
     if (!videosResponse.ok) {
       throw new Error('Failed to fetch videos')
     }
 
-    const [statsData, videosData] = await Promise.all([
-      statsResponse.json(),
-      videosResponse.json(),
-    ])
+    const videosData = await videosResponse.json()
 
-    const subscriberCount = parseInt(
-      statsData.items?.[0]?.statistics?.subscriberCount || 0
-    )
+    const subscriberCount = directSubscriberCount
     const videos =
       videosData.items?.map((item) => ({
         id: item.id.videoId,
