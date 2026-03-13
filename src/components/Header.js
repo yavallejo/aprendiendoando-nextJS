@@ -183,9 +183,9 @@ export function Header() {
               strokeLinecap="round"
               aria-hidden="true"
             >
-              <circle cx="12" cy="12" r="2.8" strokeWidth="1.5" opacity="0.85" />
-              <path d="M12 5v4.2M12 14.8V19" strokeWidth="1.4" opacity="0.65" />
-              <path d="M5 12h4.2M14.8 12H19" strokeWidth="1.4" opacity="0.65" />
+              <rect x="3" y="4" width="18" height="16" rx="3" strokeWidth="1.5" opacity="0.85" />
+              <path d="M7 9l3 3-3 3" strokeWidth="1.5" opacity="0.9" />
+              <path d="M11 15h4" strokeWidth="1.5" opacity="0.9" />
             </svg>
             <span>AprendiendoAndo</span>
           </Link>
