@@ -7,10 +7,20 @@ import { Button } from '@/components/ui/button'
 import { BGPattern } from '@/components/ui/bg-pattern'
 import { Youtube, ArrowRight } from 'lucide-react'
 
+const subscriberEstimate =
+  typeof process.env.NEXT_PUBLIC_YOUTUBE_SUBSCRIBERS_ESTIMATE === 'string' &&
+  process.env.NEXT_PUBLIC_YOUTUBE_SUBSCRIBERS_ESTIMATE.trim() !== ''
+    ? parseInt(process.env.NEXT_PUBLIC_YOUTUBE_SUBSCRIBERS_ESTIMATE, 10)
+    : null
+
 const STATS = [
   { num: 13, suffix: '+', label: 'Años de experiencia' },
   { num: 6, suffix: '+', label: 'Países remotos' },
-  { num: 12000, suffix: '+', label: 'Suscriptores' },
+  {
+    num: subscriberEstimate && !Number.isNaN(subscriberEstimate) ? subscriberEstimate : 12000,
+    suffix: '+',
+    label: 'Suscriptores',
+  },
   { num: 300, suffix: '+', label: 'Videos publicados' },
 ]
 

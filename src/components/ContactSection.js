@@ -91,8 +91,16 @@ export function ContactSection() {
           </div>
 
           {/* Right side - Form */}
-          <Card className="p-8 bg-card/50 border-border/50">
-            <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="relative">
+            <div className="absolute -inset-1 rounded-3xl bg-[radial-gradient(circle_at_0%_0%,hsl(var(--accent-brand))/0.35,transparent_55%),radial-gradient(circle_at_100%_100%,hsl(var(--accent-brand))/0.35,transparent_55%)] opacity-60 blur-2xl pointer-events-none" />
+
+            <Card className="relative p-8 border-border/60 bg-[radial-gradient(circle_at_0%_0%,hsl(var(--accent-brand))/0.11,transparent_55%),radial-gradient(circle_at_100%_100%,hsl(var(--accent-brand))/0.12,transparent_55%),linear-gradient(to_bottom_right,hsl(var(--card)),hsl(var(--background)))] shadow-[0_24px_80px_rgba(0,0,0,0.35)] rounded-3xl">
+              <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 text-xs font-medium tracking-[0.18em] uppercase rounded-full border bg-background/60 border-border/60 text-muted-foreground/90">
+                <span className="inline-block w-1.5 h-1.5 rounded-full bg-[hsl(var(--accent-brand))] shadow-[0_0_0_4px_rgba(255,255,255,0.18)]" />
+                Formulario directo
+              </div>
+
+              <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid sm:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <Label htmlFor="name" className="text-sm font-medium">
@@ -106,7 +114,7 @@ export function ContactSection() {
                     value={formData.name}
                     onChange={handleChange}
                     placeholder="Tu nombre"
-                    className="h-12 bg-background/50 border-border/50 focus:border-foreground/50"
+                    className="h-12 bg-background/70 border-border/60 focus:border-[hsl(var(--accent-brand))] focus:ring-2 focus:ring-[hsl(var(--accent-brand))]/40 focus-visible:ring-[hsl(var(--accent-brand))]/40"
                   />
                 </div>
 
@@ -122,7 +130,7 @@ export function ContactSection() {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="tu@correo.com"
-                    className="h-12 bg-background/50 border-border/50 focus:border-foreground/50"
+                    className="h-12 bg-background/70 border-border/60 focus:border-[hsl(var(--accent-brand))] focus:ring-2 focus:ring-[hsl(var(--accent-brand))]/40 focus-visible:ring-[hsl(var(--accent-brand))]/40"
                   />
                 </div>
               </div>
@@ -138,7 +146,7 @@ export function ContactSection() {
                   value={formData.company}
                   onChange={handleChange}
                   placeholder="El nombre de tu empresa"
-                  className="h-12 bg-background/50 border-border/50 focus:border-foreground/50"
+                  className="h-12 bg-background/70 border-border/60 focus:border-[hsl(var(--accent-brand))] focus:ring-2 focus:ring-[hsl(var(--accent-brand))]/40 focus-visible:ring-[hsl(var(--accent-brand))]/40"
                 />
               </div>
 
@@ -154,7 +162,7 @@ export function ContactSection() {
                   onChange={handleChange}
                   placeholder="Cuéntame sobre tu proyecto o idea..."
                   rows={5}
-                  className="bg-background/50 border-border/50 focus:border-foreground/50 resize-none"
+                  className="bg-background/70 border-border/60 focus:border-[hsl(var(--accent-brand))] focus:ring-2 focus:ring-[hsl(var(--accent-brand))]/40 focus-visible:ring-[hsl(var(--accent-brand))]/40 resize-none"
                 />
               </div>
 
@@ -176,11 +184,11 @@ export function ContactSection() {
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full h-12 rounded-full bg-foreground text-background hover:bg-foreground/90"
+                className="w-full h-12 rounded-full bg-[hsl(var(--accent-brand))] text-[hsl(var(--accent-brand-foreground))] hover:bg-[hsl(var(--accent-brand))]/90 shadow-[0_14px_40px_rgba(0,0,0,0.4)] hover:shadow-[0_18px_55px_rgba(0,0,0,0.55)] transition-shadow"
               >
                 {isSubmitting ? (
                   <span className="flex items-center gap-2">
-                    <span className="w-4 h-4 border-2 border-background/30 border-t-background rounded-full animate-spin" />
+                    <span className="w-4 h-4 border-2 border-[hsl(var(--accent-brand-foreground))]/30 border-t-[hsl(var(--accent-brand-foreground))] rounded-full animate-spin" />
                     Enviando...
                   </span>
                 ) : (
@@ -192,6 +200,7 @@ export function ContactSection() {
               </Button>
             </form>
           </Card>
+          </div>
         </div>
       </div>
     </section>
