@@ -35,11 +35,11 @@ export function YouTubeSection() {
             </span>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
               <span className="dark:gradient-text gradient-text-light">
-                Latest videos
+                Últimos videos
               </span>
             </h2>
             <p className="text-lg text-muted-foreground max-w-xl">
-              Free web development tutorials and tips to level up your skills. New videos on React, Next.js, and frontend tools.
+              Tutoriales útiles, tips de terminal y herramientas de productividad para mejorar tu día a día como desarrollador en el ecosistema Mac.
             </p>
           </div>
 

@@ -8,10 +8,10 @@ import { BGPattern } from '@/components/ui/bg-pattern'
 import { Youtube, ArrowRight } from 'lucide-react'
 
 const STATS = [
-  { num: 11, suffix: '+', label: 'Years of experience' },
-  { num: 6, suffix: '+', label: 'Remote countries' },
-  { num: 1000, suffix: '+', label: 'Students' },
-  { num: 50, suffix: '+', label: 'Published videos' },
+  { num: 11, suffix: '+', label: 'Años de experiencia' },
+  { num: 6, suffix: '+', label: 'Países remotos' },
+  { num: 12000, suffix: '+', label: 'Suscriptores' },
+  { num: 300, suffix: '+', label: 'Videos publicados' },
 ]
 
 gsap.registerPlugin(ScrollTrigger)
@@ -146,22 +146,22 @@ export function HeroSection() {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
           </span>
-          <span className="text-sm text-muted-foreground">11+ years of experience</span>
+          <span className="text-sm text-muted-foreground">+11 años de experiencia</span>
         </div>
 
         {/* Headline y subheadline: texto plano en el DOM (siempre visible), animación por bloques */}
         <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 leading-[0.95]">
           <span ref={headlineRef} className="dark:gradient-text gradient-text-light inline-block">
-            Learn web development
+            Productividad y
           </span>
           <br />
           <span ref={sublineRef} className="text-muted-foreground inline-block">
-            by building real projects
+            Desarrollo Web
           </span>
         </h1>
 
         <p ref={subheadlineRef} className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-relaxed">
-          A developer community: practical courses, real projects, and knowledge shared so you can ship to production.
+          Domina la terminal, exprime el ecosistema de Mac, lleva tu flujo de trabajo al extremo y descubre el desarrollo avanzando con WordPress.
         </p>
 
         {/* CTA buttons */}

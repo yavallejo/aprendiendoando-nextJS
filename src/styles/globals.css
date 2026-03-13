@@ -62,7 +62,18 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 1070px;
+  scroll-padding-top: 80px; /* Fixing the 1070px value which causes jumping when selecting text */
+}
+
+/* Custom Text Selection */
+::selection {
+  background-color: hsl(var(--accent-brand) / 0.9);
+  color: hsl(var(--accent-brand-foreground));
+}
+
+::-moz-selection {
+  background-color: hsl(var(--accent-brand) / 0.9);
+  color: hsl(var(--accent-brand-foreground));
 }
 
 body {

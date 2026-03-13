@@ -11,10 +11,10 @@ const socialLinks = [
 ]
 
 const navigation = [
-  { name: 'About me', href: '#about-me' },
+  { name: 'Sobre mí', href: '#about-me' },
   { name: 'Videos', href: '#videos' },
-  { name: 'Courses', href: '#premium-courses' },
-  { name: 'Contact', href: '#contact' },
+  { name: 'Cursos', href: '#premium-courses' },
+  { name: 'Contacto', href: '#contact' },
 ]
 
 export function Footer() {
@@ -43,7 +43,7 @@ export function Footer() {
               AprendiendoAndo
             </Link>
             <p className="mt-3 text-sm text-muted-foreground">
-              Developer community learning and growing together.
+              Comunidad de desarrolladores aprendiendo y creciendo juntos.
             </p>
           </div>
 
@@ -81,10 +81,10 @@ export function Footer() {
         {/* Bottom */}
         <div className="mt-10 pt-6 border-t border-border/30 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} AprendiendoAndo. All rights reserved.
+            © {new Date().getFullYear()} AprendiendoAndo. Todos los derechos reservados.
           </p>
           <p className="text-sm text-muted-foreground">
-            Made with <span className="text-red-500">♥</span> for the community
+            Hecho con <span className="text-red-500">♥</span> para la comunidad
           </p>
         </div>
       </div>

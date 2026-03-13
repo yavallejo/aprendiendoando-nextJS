@@ -11,23 +11,23 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>AprendiendoAndo - Web Development & Courses</title>
+        <title>AprendiendoAndo - Productividad y Desarrollo Web</title>
         <meta
           name="description"
-          content="Learn frontend development with 11+ years of experience. Free tutorials, premium courses (React, Next.js, WordPress), and a community that ships real projects."
+          content="Aprende herramientas para desarrolladores, domina la terminal, Git, WordPress avanzado y maximiza tu productividad en Mac."
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
 
         {/* Open Graph */}
-        <meta property="og:title" content="AprendiendoAndo - Web Development & Courses" />
-        <meta property="og:description" content="Learn frontend development. Free tutorials, premium courses, and a community that ships real projects. React, Next.js, WordPress." />
+        <meta property="og:title" content="AprendiendoAndo - Productividad y Desarrollo Web" />
+        <meta property="og:description" content="Domina tu terminal, Git, herramientas en Mac y WordPress avanzado. Aprende y mejora tu flujo de trabajo." />
         <meta property="og:type" content="website" />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="AprendiendoAndo - Web Development & Courses" />
-        <meta name="twitter:description" content="Learn frontend development. Free tutorials, premium courses, and a community that ships real projects. React, Next.js, WordPress." />
+        <meta name="twitter:title" content="AprendiendoAndo - Productividad y Desarrollo Web" />
+        <meta name="twitter:description" content="Domina tu terminal, Git, herramientas en Mac y WordPress avanzado. Aprende y mejora tu flujo de trabajo." />
       </Head>
 
       <div className="min-h-screen bg-background">

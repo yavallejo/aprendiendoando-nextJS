@@ -5,23 +5,23 @@ import { Code2, Globe, Users, Rocket } from 'lucide-react'
 const features = [
   {
     icon: Code2,
-    title: 'Frontend Developer',
-    description: 'Over 11 years building modern, scalable web interfaces.',
+    title: 'Desarrollador Web',
+    description: 'Más de 11 años creando soluciones web y flujos de trabajo eficientes.',
   },
   {
     icon: Globe,
-    title: 'Global Experience',
-    description: 'Remote work with teams from Peru, Mexico, USA, Austria, Costa Rica, and Colombia.',
+    title: 'Experiencia Global',
+    description: 'Trabajo remoto con equipos de Perú, México, USA, Austria, Costa Rica y Colombia.',
   },
   {
     icon: Users,
-    title: 'WordPress Community',
-    description: 'Organizer of the local WordPress community, sharing knowledge every month.',
+    title: 'Comunidad WordPress',
+    description: 'Organizador de la comunidad local de WordPress, compartiendo conocimiento mes a mes.',
   },
   {
     icon: Rocket,
-    title: 'Teaching by Doing',
-    description: 'Hands-on courses where you build real, production-ready projects.',
+    title: 'Productividad Extrema',
+    description: 'Enseño herramientas reales que uso en el día a día para trabajar mejor y más rápido.',
   },
 ]
 
@@ -54,18 +54,18 @@ export function AboutSection() {
           {/* Right Column: Content */}
           <div className="lg:col-span-7 mt-8 lg:mt-0">
             <span className="inline-block px-4 py-1.5 mb-6 text-xs font-medium uppercase tracking-wider text-[hsl(var(--accent-brand-foreground))] border border-[hsl(var(--accent-brand))] bg-[hsl(var(--accent-brand))/10] rounded-full">
-              Instructor Profile
+              Perfil del Creador
             </span>
             
             <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
               <span className="dark:gradient-text gradient-text-light">
-                Hey, I'm Yan Vallejo
+                Hola, soy Yan Vallejo
               </span>
             </h2>
             
             <p className="text-lg text-muted-foreground mb-10 leading-relaxed">
-              Founder of <strong className="text-foreground">AprendiendoAndo</strong>. 
-              My mission is to equip you with real-world skills to build modern, production-ready web applications using best practices.
+              Creador de <strong className="text-foreground">AprendiendoAndo</strong>. 
+              Mi misión es compartirte el conjunto de herramientas exactas (workflows en Mac, terminal, Git, WordPress) que uso en el mundo real para que seas un desarrollador más eficiente.
             </p>
 
             {/* Features grid */}

@@ -46,20 +46,20 @@ export function ContactSection() {
           {/* Left side - Info */}
           <div>
             <span className="inline-block px-4 py-1.5 mb-6 text-xs font-medium uppercase tracking-wider text-muted-foreground border border-border/50 rounded-full">
-              Contact
+              Contacto
             </span>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
               <span className="dark:gradient-text gradient-text-light">
-                Let&apos;s work
+                Trabajemos
               </span>
               <br />
               <span className="text-muted-foreground">
-                together
+                juntos
               </span>
             </h2>
             <p className="text-lg text-muted-foreground mb-10 max-w-md">
-              Do you have an interesting project or need a frontend developer? 
-              I&apos;d love to hear from you.
+              ¿Tienes un gran proyecto en mente o buscas un desarrollador web? 
+              Me encantaría escucharte.
             </p>
 
             {/* Contact options */}
@@ -71,7 +71,7 @@ export function ContactSection() {
                 <div>
                   <h3 className="font-medium text-foreground mb-1">Email</h3>
                   <p className="text-muted-foreground">
-                    I typically respond within 24 hours
+                    Suelo responder en 24 horas
                   </p>
                 </div>
               </div>
@@ -81,9 +81,9 @@ export function ContactSection() {
                   <MessageSquare size={22} />
                 </div>
                 <div>
-                  <h3 className="font-medium text-foreground mb-1">Freelance Projects</h3>
+                  <h3 className="font-medium text-foreground mb-1">Proyectos Freelance</h3>
                   <p className="text-muted-foreground">
-                    Available for remote projects
+                    Disponible para proyectos remotos
                   </p>
                 </div>
               </div>
@@ -96,7 +96,7 @@ export function ContactSection() {
               <div className="grid sm:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <Label htmlFor="name" className="text-sm font-medium">
-                    Name
+                    Nombre
                   </Label>
                   <Input
                     id="name"
@@ -105,7 +105,7 @@ export function ContactSection() {
                     required
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="Your name"
+                    placeholder="Tu nombre"
                     className="h-12 bg-background/50 border-border/50 focus:border-foreground/50"
                   />
                 </div>
@@ -121,7 +121,7 @@ export function ContactSection() {
                     required
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="you@example.com"
+                    placeholder="tu@correo.com"
                     className="h-12 bg-background/50 border-border/50 focus:border-foreground/50"
                   />
                 </div>
@@ -129,7 +129,7 @@ export function ContactSection() {
 
               <div className="space-y-2">
                 <Label htmlFor="company" className="text-sm font-medium">
-                  Company <span className="text-muted-foreground">(optional)</span>
+                  Compañía <span className="text-muted-foreground">(opcional)</span>
                 </Label>
                 <Input
                   id="company"
@@ -137,14 +137,14 @@ export function ContactSection() {
                   type="text"
                   value={formData.company}
                   onChange={handleChange}
-                  placeholder="Your company name"
+                  placeholder="El nombre de tu empresa"
                   className="h-12 bg-background/50 border-border/50 focus:border-foreground/50"
                 />
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="message" className="text-sm font-medium">
-                  Message
+                  Mensaje
                 </Label>
                 <Textarea
                   id="message"
@@ -152,7 +152,7 @@ export function ContactSection() {
                   required
                   value={formData.message}
                   onChange={handleChange}
-                  placeholder="Tell me about your project or idea..."
+                  placeholder="Cuéntame sobre tu proyecto o idea..."
                   rows={5}
                   className="bg-background/50 border-border/50 focus:border-foreground/50 resize-none"
                 />
@@ -162,14 +162,14 @@ export function ContactSection() {
               {submitStatus === 'success' && (
                 <div className="flex items-center gap-3 p-4 rounded-xl bg-green-500/10 border border-green-500/20 text-green-600 dark:text-green-400">
                   <CheckCircle size={20} />
-                  <span>Message sent! I&apos;ll get back to you soon.</span>
+                  <span>¡Mensaje enviado! Te responderé lo más pronto posible.</span>
                 </div>
               )}
 
               {submitStatus === 'error' && (
                 <div className="flex items-center gap-3 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400">
                   <AlertCircle size={20} />
-                  <span>There was an error sending your message. Please try again.</span>
+                  <span>Hubo un error al enviar el mensaje. Por favor intenta de nuevo.</span>
                 </div>
               )}
 
@@ -181,12 +181,12 @@ export function ContactSection() {
                 {isSubmitting ? (
                   <span className="flex items-center gap-2">
                     <span className="w-4 h-4 border-2 border-background/30 border-t-background rounded-full animate-spin" />
-                    Sending...
+                    Enviando...
                   </span>
                 ) : (
                   <span className="flex items-center gap-2">
                     <Send size={18} />
-                    Send message
+                    Enviar mensaje
                   </span>
                 )}
               </Button>

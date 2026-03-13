@@ -9,10 +9,10 @@ import { Menu, X, Youtube } from 'lucide-react'
 const YOUTUBE_SUBSCRIBE_URL = 'https://www.youtube.com/@AprendiendoAndo?sub_confirmation=1'
 
 const navigation = [
-  { name: 'About me', href: '#about-me' },
+  { name: 'Sobre mí', href: '#about-me' },
   { name: 'Videos', href: '#videos' },
-  { name: 'Courses', href: '#premium-courses' },
-  { name: 'Contact', href: '#contact' },
+  { name: 'Cursos', href: '#premium-courses' },
+  { name: 'Contacto', href: '#contact' },
 ]
 
 const STICKY_SCROLL_THRESHOLD = 20
@@ -231,7 +231,7 @@ export function Header() {
               aria-label="Suscribirse al canal de YouTube"
             >
               <Youtube size={18} aria-hidden />
-              Subscribe
+              Suscribirme
             </a>
             <ThemeToggle />
 

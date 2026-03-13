@@ -9,8 +9,8 @@ import { Users, Star, GraduationCap, ArrowUpRight, Sparkles } from 'lucide-react
 const placeholderCourses = [
   {
     id: 1,
-    title: 'React from Zero to Advanced',
-    description: 'Learn React with real-world projects and industry best practices.',
+    title: 'Productividad Extrema en Mac para Devs',
+    description: 'Domina Raycast, Amphetamine, Atajos y más herramientas exclusivas de MacOS.',
     image: null,
     students: 2500,
     rating: 4.8,
@@ -18,8 +18,8 @@ const placeholderCourses = [
   },
   {
     id: 2,
-    title: 'Next.js - The Fullstack Framework',
-    description: 'Master Next.js and build modern web applications with SSR and SSG.',
+    title: 'Domina Git y Control de Versiones con Fork',
+    description: 'Aprende a realizar merges visuales y ten control total de tu código sn sufrir.',
     image: null,
     students: 1800,
     rating: 4.9,
@@ -27,8 +27,8 @@ const placeholderCourses = [
   },
   {
     id: 3,
-    title: 'WordPress for Developers',
-    description: 'Create professional themes and plugins with PHP and WordPress.',
+    title: 'Desarrollo de Temas en WordPress',
+    description: 'Crea temas profesionales desde cero, usa campos condicionales y personaliza el panel.',
     image: null,
     students: 3200,
     rating: 4.7,
@@ -49,19 +49,19 @@ export function CoursesSection() {
         <div className="text-center mb-16">
           <span className="inline-flex items-center gap-2 px-4 py-1.5 mb-6 text-xs font-medium uppercase tracking-wider text-muted-foreground border border-border/50 rounded-full">
             <Sparkles size={14} />
-            Premium Courses
+            Cursos Premium
           </span>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
             <span className="dark:gradient-text gradient-text-light">
-              Learn with projects
+              Desarrolla habilidades
             </span>
             <br />
             <span className="text-muted-foreground">
-              ready for production
+              listas para el mundo real
             </span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Build real applications, add them to your portfolio, and apply what you learn on the job. From React to WordPress.
+            Aprende a trabajar como un profesional: desde tu entorno local, al control de tu código y la gestión de proyectos web.
           </p>
         </div>
 
