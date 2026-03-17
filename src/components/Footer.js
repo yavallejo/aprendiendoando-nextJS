@@ -13,7 +13,6 @@ const socialLinks = [
 const navigation = [
   { name: 'Sobre mí', href: '#about-me' },
   { name: 'Videos', href: '#videos' },
-  { name: 'Cursos', href: '#premium-courses' },
   { name: 'Contacto', href: '#contact' },
 ]
 
