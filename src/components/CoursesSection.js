@@ -5,7 +5,7 @@ import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Users, Star, GraduationCap, ArrowUpRight, Sparkles } from 'lucide-react'
 
-// Placeholder courses for when data is not configured
+// Placeholder courses for when course data is not configured
 const placeholderCourses = [
   {
     id: 1,
@@ -41,7 +41,7 @@ export function CoursesSection() {
 
   return (
     <section id="premium-courses" className="relative py-12 md:py-16">
-      {/* Background */}
+      {/* Background accent */}
       <div className="absolute inset-0 bg-linear-to-b from-transparent via-accent/5 to-transparent pointer-events-none" />
       
       <div className="relative max-w-6xl mx-auto px-6">
@@ -72,7 +72,7 @@ export function CoursesSection() {
               key={course.id}
               className="group relative overflow-hidden bg-card/40 backdrop-blur-sm border-border/40 hover:border-accent/50 hover:shadow-2xl hover:shadow-accent/5 hover:-translate-y-1 transition-all duration-500"
             >
-              {/* Course image/placeholder */}
+              {/* Course image or placeholder */}
               <div className="relative aspect-video bg-linear-to-br from-accent to-accent/30 overflow-hidden">
                 {course.image ? (
                   <img
@@ -94,7 +94,7 @@ export function CoursesSection() {
                 )}
               </div>
 
-              {/* Content */}
+              {/* Card content */}
               <div className="p-6">
                 <h3 className="text-xl font-semibold text-foreground mb-2 group-hover:text-foreground/80 transition-colors">
                   {course.title}
@@ -106,7 +106,7 @@ export function CoursesSection() {
                   </p>
                 )}
 
-                {/* Stats */}
+                {/* Course stats */}
                 <div className="flex items-center gap-4 mb-6 text-sm">
                   <div className="flex items-center gap-1.5 text-muted-foreground">
                     <Users size={16} />
@@ -118,7 +118,7 @@ export function CoursesSection() {
                   </div>
                 </div>
 
-                {/* CTA */}
+                {/* Course CTA button */}
                 <Button
                   asChild
                   className="w-full h-11 rounded-full bg-foreground text-background hover:bg-foreground/90"
@@ -138,7 +138,7 @@ export function CoursesSection() {
           ))}
         </div>
 
-        {/* Note */}
+        {/* Note for placeholder courses */}
         {courses.length === 0 && (
           <p className="mt-10 text-center text-sm text-muted-foreground">
             * Los cursos mostrados son de ejemplo. Los cursos reales se añadirán pronto.

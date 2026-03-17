@@ -12,7 +12,7 @@ export function YouTubeSection() {
   const subscriberCount = data?.subscriberCount ?? null
   const videos = data?.videos ?? []
 
-  // Placeholder videos for when API is not configured
+  // Placeholder videos for when the API is not configured
   const placeholderVideos = [
     { id: '1', title: 'Building your first project with Next.js 14', thumbnail: null, publishedAt: '2024-01-15' },
     { id: '2', title: 'Tailwind CSS: Advanced tips and tricks', thumbnail: null, publishedAt: '2024-01-10' },
@@ -43,7 +43,7 @@ export function YouTubeSection() {
             </p>
           </div>
 
-          {/* Subscriber count (CTA principal vive en el header sticky) */}
+          {/* Subscriber count (primary CTA lives in the sticky header) */}
           <div className="flex flex-col items-start md:items-end gap-4">
             {subscriberCount != null ? (
               <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-accent/30 border border-border/50">
@@ -68,7 +68,7 @@ export function YouTubeSection() {
               className="group"
             >
               <Card className="overflow-hidden bg-card/50 border-border/50 hover:border-border transition-all duration-300 card-hover">
-                {/* Thumbnail */}
+                {/* Video thumbnail */}
                 <div className="relative aspect-video bg-accent/50 overflow-hidden">
                   {video.thumbnail ? (
                     <img
@@ -90,7 +90,7 @@ export function YouTubeSection() {
                   </div>
                 </div>
 
-                {/* Content */}
+                {/* Video meta content */}
                 <div className="p-5">
                   <h3 className="font-medium text-foreground line-clamp-2 group-hover:text-foreground/80 transition-colors mb-2">
                     {video.title}
@@ -108,7 +108,7 @@ export function YouTubeSection() {
           ))}
         </div>
 
-        {/* View all link */}
+        {/* View all videos link */}
         <div className="mt-10 text-center">
           <Button
             asChild

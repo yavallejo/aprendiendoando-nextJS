@@ -34,7 +34,7 @@ export function Header() {
   const logoIntroTlRef = useRef(null)
   const lastLogoIndexRef = useRef(-1)
 
-  // Registrar plugin SplitText una sola vez en cliente
+  // Register SplitText plugin once on the client
   useEffect(() => {
     if (typeof window === 'undefined') return
     gsap.registerPlugin(SplitText)
@@ -50,7 +50,7 @@ export function Header() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // GSAP: animation when applying/removing sticky (transforms, cleanup, reduced motion)
+  // GSAP: animation when applying/removing sticky state (transforms, cleanup, reduced motion)
   useEffect(() => {
     const header = headerRef.current
     if (!header) return
@@ -86,7 +86,7 @@ export function Header() {
     return () => stickyTweenRef.current?.kill()
   }, [isScrolled])
 
-  // GSAP: mobile menu open/close animation + reduced motion
+  // GSAP: mobile menu open/close animation with reduced-motion support
   useEffect(() => {
     const wrapper = mobileNavWrapperRef.current
     const nav = mobileNavRef.current
@@ -285,7 +285,7 @@ export function Header() {
     >
       <div className="max-w-6xl mx-auto px-6">
         <div className="flex h-16 items-center">
-          {/* Logo con animación sutil al hover (GSAP) */}
+          {/* Logo with subtle hover animation (GSAP) */}
           <Link
             href="/"
             onClick={(e) => {
@@ -314,7 +314,7 @@ export function Header() {
             </span>
           </Link>
 
-          {/* Desktop Navigation — centered */}
+          {/* Desktop navigation — centered */}
           <nav className="hidden md:flex flex-1 items-center justify-center">
             <div className="flex items-center gap-1">
               {navigation.map((item) => (
@@ -345,7 +345,7 @@ export function Header() {
             </div>
           </nav>
 
-          {/* Actions: Subscribe (accent) + Theme + Mobile */}
+          {/* Actions: subscribe (accent), theme toggle and mobile menu */}
           <div className="flex flex-1 md:flex-none items-center justify-end gap-2">
             <a
               href={YOUTUBE_SUBSCRIBE_URL}
@@ -369,7 +369,7 @@ export function Header() {
           </div>
         </div>
 
-        {/* Mobile Navigation — box contenedor a ancho completo del área de contenido */}
+        {/* Mobile navigation — container spans full content width */}
         <div
           ref={mobileNavWrapperRef}
           className="md:hidden -mx-6 w-[calc(100%+3rem)] max-w-none bg-background/95 backdrop-blur-md border-t border-border/50 shadow-[0_10px_40px_-12px_hsl(var(--foreground)/0.12)]"

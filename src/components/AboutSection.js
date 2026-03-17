@@ -34,7 +34,7 @@ export function AboutSection() {
       <div className="relative px-6 mx-auto max-w-6xl">
         <div className="grid grid-cols-1 gap-12 items-center lg:grid-cols-12 lg:gap-16">
 
-          {/* Left Column: Image & Badge */}
+          {/* Left column: image and badge */}
           <div className="relative lg:col-span-5">
             <div className="overflow-hidden relative border aspect-square md:aspect-4/5 rounded-4xl border-border/30 bg-accent/5">
               <img
@@ -42,19 +42,19 @@ export function AboutSection() {
                 alt="Yan Vallejo en su espacio de trabajo"
                 className="w-full h-full object-cover scale-105 saturate-110 contrast-[1.05] brightness-105"
               />
-              {/* Color overlay para armonizar con la paleta del sitio */}
+              {/* Color overlay to match the site color palette */}
               <div className="absolute inset-0 to-transparent mix-blend-multiply pointer-events-none bg-linear-to-t from-background/60 via-background/10" />
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,hsl(var(--accent-brand))/0.35,transparent_55%)] mix-blend-soft-light pointer-events-none" />
             </div>
 
-            {/* Floating badge */}
+            {/* Floating experience badge */}
             <div className="absolute -right-6 -bottom-6 p-6 rounded-2xl border shadow-xl backdrop-blur-sm transition-transform duration-300 -rotate-3 md:-right-8 bg-card border-border/50 hover:rotate-0">
               <div className="text-3xl font-bold text-foreground">13+</div>
               <div className="text-sm font-medium text-muted-foreground">Años programando</div>
             </div>
           </div>
 
-          {/* Right Column: Content */}
+          {/* Right column: content */}
           <div className="mt-8 lg:col-span-7 lg:mt-0">
             <span className="inline-block px-4 py-1.5 mb-6 text-xs font-semibold uppercase tracking-[0.18em] rounded-full shadow-sm border bg-[hsl(var(--accent-brand))] text-[hsl(var(--accent-brand-foreground))] border-[hsl(var(--accent-brand))]">
               Perfil del Creador

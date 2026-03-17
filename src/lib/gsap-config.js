@@ -4,13 +4,13 @@ import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-// Anchor links (#section) and smooth scroll are handled by Lenis (LenisProvider with anchors)
+// Anchor links (#section) and smooth scrolling are handled by Lenis (LenisProvider with anchors)
 export function useSmoothScroll() {
   // Reserved for additional logic if needed; Lenis already handles anchors
 }
 
-// Patrón tipo machone: ScrollTrigger + Lenis para animaciones de entrada al viewport.
-// gsap.set inicial + timeline con scrollTrigger asegura sync con el scroll suave.
+// Machone-style pattern: ScrollTrigger + Lenis for entrance animations on viewport.
+// Initial gsap.set + timeline with ScrollTrigger keeps things in sync with smooth scrolling.
 const EASE = 'power2.out'
 const Y = 24
 
@@ -67,7 +67,7 @@ export function useScrollAnimations() {
       ScrollTrigger.refresh()
     }
 
-    // Iniciar al montar (DOM ya tiene las secciones) y refrescar cuando termine load
+    // Initialize on mount (DOM already has the sections) and refresh when load finishes
     initAnimations()
     const onLoad = () => ScrollTrigger.refresh()
     if (document.readyState !== 'complete') {

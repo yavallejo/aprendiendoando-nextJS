@@ -30,7 +30,7 @@ export function Footer() {
     <footer className="border-t border-border/50">
       <div className="max-w-6xl mx-auto px-6 py-12 md:py-16">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-          {/* Logo & description */}
+          {/* Logo and short description */}
           <div className="max-w-sm">
             <Link
               href="/"
@@ -47,7 +47,7 @@ export function Footer() {
             </p>
           </div>
 
-          {/* Navigation */}
+          {/* Internal navigation links */}
           <nav className="flex flex-wrap gap-x-8 gap-y-4">
             {navigation.map((item) => (
               <Link
@@ -61,7 +61,7 @@ export function Footer() {
             ))}
           </nav>
 
-          {/* Social */}
+          {/* Social links */}
           <div className="flex items-center gap-4">
             {socialLinks.map((social) => (
               <a
@@ -78,7 +78,7 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Bottom */}
+        {/* Bottom bar */}
         <div className="mt-10 pt-6 border-t border-border/30 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground">
             © {new Date().getFullYear()} AprendiendoAndo. Todos los derechos reservados.

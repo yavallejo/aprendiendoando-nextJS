@@ -52,7 +52,7 @@ export function HeroSection() {
     return () => hero.removeEventListener('mousemove', handleMouseMove)
   }, [])
 
-  // Animación por bloques: texto normal en el DOM (siempre visible), animamos solo los contenedores
+  // Block-based animation: text stays as plain DOM, only containers are animated
   useEffect(() => {
     const headline = headlineRef.current
     const subline = sublineRef.current
@@ -81,7 +81,7 @@ export function HeroSection() {
     }
   }, [])
 
-  // Count-up de stats cuando la sección entra en viewport
+  // Stats count-up animation when the section enters the viewport
   useEffect(() => {
     const container = statsRef.current
     if (!container) return
@@ -143,14 +143,14 @@ export function HeroSection() {
         `,
       }}
     >
-      {/* Visual Pattern overlay. `bg-pattern.js` leverages native Next.js UI conventions via `shadcn/ui` */}
+      {/* Visual pattern overlay. `bg-pattern.js` leverages native Next.js UI conventions via `shadcn/ui` */}
       <BGPattern variant="grid" mask="fade-edges" fill="hsl(var(--accent-brand)/0.05)" />
       
       {/* Background gradient */}
       <div className="absolute inset-0 bg-linear-to-b from-transparent via-background to-background pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-24 md:py-28 text-center">
-        {/* Badge */}
+        {/* Hero badge */}
         <div className="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full border border-border/50 bg-accent/30 backdrop-blur-sm">
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
@@ -159,7 +159,7 @@ export function HeroSection() {
           <span className="text-sm text-muted-foreground">+13 años de experiencia</span>
         </div>
 
-        {/* Headline y subheadline: texto plano en el DOM (siempre visible), animación por bloques */}
+        {/* Headline and subheadline: plain DOM text (always visible), block-based animation */}
         <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 leading-[0.95]">
           <span ref={headlineRef} className="dark:gradient-text gradient-text-light inline-block">
             Productividad y
@@ -174,7 +174,7 @@ export function HeroSection() {
           Domina la terminal, exprime el ecosistema de Mac, lleva tu flujo de trabajo al extremo y descubre el desarrollo avanzando con WordPress.
         </p>
 
-        {/* CTA buttons */}
+        {/* Primary CTA buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Button
             size="lg"
@@ -204,7 +204,7 @@ export function HeroSection() {
           </Button>
         </div>
 
-        {/* Stats */}
+        {/* Stats grid */}
         <div ref={statsRef} className="mt-16 pt-10 border-t border-border/30">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {STATS.map((stat, index) => (
@@ -223,7 +223,7 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* Bottom fade */}
+      {/* Bottom fade-out overlay */}
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-t from-background to-transparent pointer-events-none" />
     </section>
   )

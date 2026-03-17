@@ -3,11 +3,11 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' })
   }
 
-  // Intenta primero el feed público RSS de YouTube (sin API key ni cuotas)
-  // Necesitas el channelId estático de tu canal de YouTube.
-  // Ejemplo de URL del feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCxxxxxxxxxxxx
+  // Try the public YouTube RSS feed first (no API key or quota required).
+  // You need the static channelId for your YouTube channel.
+  // Example feed URL: https://www.youtube.com/feeds/videos.xml?channel_id=UCxxxxxxxxxxxx
   const channelId = process.env.YOUTUBE_CHANNEL_ID
-  // Fallback: scrapping ligero de la página de videos usando el handle
+  // Fallback: lightweight scraping of the videos page using the channel handle
   const channelHandle = process.env.YOUTUBE_CHANNEL_HANDLE || '@AprendiendoAndo'
   const subscriberEstimateEnv = process.env.YOUTUBE_SUBSCRIBERS_ESTIMATE
   const subscriberEstimate =
@@ -18,7 +18,7 @@ export default async function handler(req, res) {
   try {
     let videos = []
 
-    // 1) Intentar con RSS + channelId si está disponible
+    // 1) Try RSS + channelId when it is available
     if (channelId) {
       const feedUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`
       const feedResponse = await fetch(feedUrl)
@@ -55,7 +55,7 @@ export default async function handler(req, res) {
       }
     }
 
-    // 2) Si el RSS falla (404 u otro) o no hay channelId, usar fallback HTML con handle
+    // 2) If RSS fails (404 or other) or there is no channelId, use HTML fallback with handle
     if (videos.length === 0 && channelHandle) {
       const htmlResponse = await fetch(
         `https://www.youtube.com/${channelHandle.replace('@', '')}/videos`
@@ -64,7 +64,7 @@ export default async function handler(req, res) {
       if (!htmlResponse.ok) {
         const errorBody = await htmlResponse.text()
         console.error('YouTube HTML page error body:', errorBody)
-        // no lanzamos error: seguimos con otros fallbacks
+        // do not throw here; continue with other fallbacks
       } else {
         const html = await htmlResponse.text()
 
@@ -112,7 +112,7 @@ export default async function handler(req, res) {
               if (videos.length >= 6) break
             }
           } catch (e) {
-            console.error('Failed to parse ytInitialData', e)
+            console.error('Failed to parse ytInitialData from YouTube HTML', e)
           }
         } else {
           console.error('ytInitialData not found in YouTube HTML')
@@ -120,7 +120,7 @@ export default async function handler(req, res) {
       }
     }
 
-    // 3) Fallback definitivo: lista manual de IDs en env para no romper la página
+    // 3) Final fallback: manual list of video IDs from env so the page does not break
     if (videos.length === 0) {
       const idsEnv = process.env.YOUTUBE_VIDEO_IDS || ''
       const ids = idsEnv
