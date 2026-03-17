@@ -18,38 +18,60 @@ export function LenisProvider({ children }) {
   useEffect(() => {
     if (typeof window === 'undefined') return
 
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: EASING,
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 2,
-      // Anchor links with offset for fixed header (~80px)
-      anchors: {
-        offset: 80,
-      },
-      // Sync with GSAP ScrollTrigger
-      autoRaf: false,
-    })
+    const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+    const saveData = typeof navigator !== 'undefined' && navigator.connection?.saveData
+    const isSmallScreen = window.innerWidth < 768
 
-    lenisRef.current = lenis
-
-    // GSAP integration: ScrollTrigger and ticker for scroll-linked animations
-    gsap.registerPlugin(ScrollTrigger)
-    lenis.on('scroll', ScrollTrigger.update)
-    const tickerCallback = (time) => {
-      lenis.raf(time * 1000)
+    // En móviles, usuarios con ahorro de datos o que piden menos movimiento
+    // no inicializamos Lenis para proteger INP y batería.
+    if (prefersReducedMotion || saveData || isSmallScreen) {
+      return
     }
-    tickerCallbackRef.current = tickerCallback
-    gsap.ticker.add(tickerCallback)
-    gsap.ticker.lagSmoothing(0)
+
+    const initLenis = () => {
+      const lenis = new Lenis({
+        duration: 1.2,
+        easing: EASING,
+        orientation: 'vertical',
+        gestureOrientation: 'vertical',
+        smoothWheel: true,
+        wheelMultiplier: 1,
+        touchMultiplier: 2,
+        // Anchor links with offset for fixed header (~80px)
+        anchors: {
+          offset: 80,
+        },
+        // Sync with GSAP ScrollTrigger
+        autoRaf: false,
+      })
+
+      lenisRef.current = lenis
+
+      // GSAP integration: ScrollTrigger and ticker for scroll-linked animations
+      gsap.registerPlugin(ScrollTrigger)
+      lenis.on('scroll', ScrollTrigger.update)
+      const tickerCallback = (time) => {
+        lenis.raf(time * 1000)
+      }
+      tickerCallbackRef.current = tickerCallback
+      gsap.ticker.add(tickerCallback)
+      gsap.ticker.lagSmoothing(0)
+    }
+
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(initLenis)
+    } else {
+      setTimeout(initLenis, 0)
+    }
 
     return () => {
-      gsap.ticker.remove(tickerCallbackRef.current)
-      lenis.destroy()
-      lenisRef.current = null
+      if (tickerCallbackRef.current) {
+        gsap.ticker.remove(tickerCallbackRef.current)
+      }
+      if (lenisRef.current) {
+        lenisRef.current.destroy()
+        lenisRef.current = null
+      }
     }
   }, [])
 

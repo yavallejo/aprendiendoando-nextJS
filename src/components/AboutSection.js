@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { Code2, Globe, Users, Rocket } from 'lucide-react'
 
 const features = [
@@ -37,10 +38,13 @@ export function AboutSection() {
           {/* Left column: image and badge */}
           <div className="relative lg:col-span-5">
             <div className="overflow-hidden relative border aspect-square md:aspect-4/5 rounded-4xl border-border/30 bg-accent/5">
-              <img
+              <Image
                 src="/yan-vallejo.jpg"
                 alt="Yan Vallejo en su espacio de trabajo"
-                className="w-full h-full object-cover scale-105 saturate-110 contrast-[1.05] brightness-105"
+                fill
+                sizes="(min-width: 1024px) 480px, (min-width: 768px) 50vw, 100vw"
+                priority={false}
+                className="object-cover scale-105 saturate-110 contrast-[1.05] brightness-105"
               />
               {/* Color overlay to match the site color palette */}
               <div className="absolute inset-0 to-transparent mix-blend-multiply pointer-events-none bg-linear-to-t from-background/60 via-background/10" />

@@ -6,7 +6,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 // Anchor links (#section) and smooth scrolling are handled by Lenis (LenisProvider with anchors)
 export function useSmoothScroll() {
-  // Reserved for additional logic if needed; Lenis already handles anchors
+  // Reserved for additional logic if needed; Lenis already handles anchors.
+  // Si a futuro añadimos lógica aquí, debe respetar prefers-reduced-motion/saveData.
 }
 
 // Machone-style pattern: ScrollTrigger + Lenis for entrance animations on viewport.
@@ -39,9 +40,12 @@ export function useScrollAnimations() {
     gsap.registerPlugin(ScrollTrigger)
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const saveData = typeof navigator !== 'undefined' && navigator.connection?.saveData
+    const isSmallScreen = window.innerWidth < 768
 
     function initAnimations() {
-      if (prefersReducedMotion) return
+      // Respetamos usuarios que piden menos movimiento, ahorro de datos o pantallas pequeñas.
+      if (prefersReducedMotion || saveData || isSmallScreen) return
 
       const sections = document.querySelectorAll('section')
       sections.forEach((section, index) => {
@@ -67,8 +71,12 @@ export function useScrollAnimations() {
       ScrollTrigger.refresh()
     }
 
-    // Initialize on mount (DOM already has the sections) and refresh when load finishes
-    initAnimations()
+    // Initialize de forma diferida para no competir con el primer render.
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(initAnimations)
+    } else {
+      setTimeout(initAnimations, 0)
+    }
     const onLoad = () => ScrollTrigger.refresh()
     if (document.readyState !== 'complete') {
       window.addEventListener('load', onLoad, { once: true })

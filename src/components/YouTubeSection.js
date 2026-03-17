@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import useSWR from 'swr'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -71,13 +72,15 @@ export function YouTubeSection() {
                 {/* Video thumbnail */}
                 <div className="relative aspect-video bg-accent/50 overflow-hidden">
                   {video.thumbnail ? (
-                    <img
+                    <Image
                       src={video.thumbnail}
                       alt={video.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-[cubic-bezier(0.33,1,0.68,1)]"
+                      fill
+                      sizes="(min-width: 1024px) 320px, (min-width: 768px) 50vw, 100vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500 ease-[cubic-bezier(0.33,1,0.68,1)]"
                     />
                   ) : (
-                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-accent to-accent/50">
+                    <div className="absolute inset-0 flex items-center justify-center bg-linear-to-br from-accent to-accent/50">
                       <Play size={40} className="text-muted-foreground/50" />
                     </div>
                   )}
