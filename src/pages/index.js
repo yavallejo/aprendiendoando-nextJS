@@ -1,10 +1,19 @@
 import Head from 'next/head'
+import dynamic from 'next/dynamic'
 import { Header } from '@/components/Header'
 import { HeroSection } from '@/components/HeroSection'
 import { AboutSection } from '@/components/AboutSection'
-import { YouTubeSection } from '@/components/YouTubeSection'
-import { ContactSection } from '@/components/ContactSection'
 import { Footer } from '@/components/Footer'
+
+const YouTubeSection = dynamic(
+  () => import('@/components/YouTubeSection').then((m) => m.YouTubeSection),
+  { ssr: true }
+)
+
+const ContactSection = dynamic(
+  () => import('@/components/ContactSection').then((m) => m.ContactSection),
+  { ssr: true }
+)
 
 export default function Home() {
   return (

@@ -2,9 +2,16 @@
   "name": "AprendiendoAndo-nextjs",
   "version": "0.1.0",
   "private": true,
+  "browserslist": [
+    "Chrome >= 111",
+    "Edge >= 111",
+    "Firefox >= 111",
+    "Safari >= 16.4"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:analyze": "ANALYZE=true next build",
     "start": "next start",
     "lint": "next lint"
   },
@@ -28,6 +35,7 @@
     "tailwind-merge": "3.4.0"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "16.1.7",
     "@tailwindcss/postcss": "4.1.18",
     "autoprefixer": "10.4.23",
     "postcss": "8.5.6",
