@@ -12,7 +12,6 @@ const YOUTUBE_SUBSCRIBE_URL = 'https://www.youtube.com/@AprendiendoAndo?sub_conf
 const navigation = [
   { name: 'Sobre mí', href: '#about-me' },
   { name: 'Videos', href: '#videos' },
-  { name: 'Cursos', href: '#premium-courses' },
   { name: 'Contacto', href: '#contact' },
 ]
 
