@@ -262,16 +262,10 @@ export function Header() {
     })
   }
 
-  const handleNavClick = (e, href) => {
-    e.preventDefault()
+  const handleNavClick = () => {
+    // Only close the mobile menu; scrolling is handled by the browser
+    // honoring `scroll-margin-top` on target sections.
     setIsMobileMenuOpen(false)
-    const element = document.querySelector(href)
-    if (element) {
-      const headerOffset = 80
-      const elementPosition = element.getBoundingClientRect().top
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset
-      window.scrollTo({ top: offsetPosition, behavior: 'smooth' })
-    }
   }
 
   return (
@@ -320,7 +314,7 @@ export function Header() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  onClick={(e) => handleNavClick(e, item.href)}
+                  onClick={handleNavClick}
                   className="nav-link group relative px-4 py-2.5 text-sm text-muted-foreground rounded-full
                     transition-[color,background-color,transform] duration-300 ease-out
                     hover:text-foreground hover:bg-accent/60 hover:-translate-y-0.5 hover:scale-[1.03]
@@ -386,7 +380,7 @@ export function Header() {
                   key={item.name}
                   ref={(el) => { mobileNavItemsRef.current[index] = el }}
                   href={item.href}
-                  onClick={(e) => handleNavClick(e, item.href)}
+                  onClick={handleNavClick}
                   className="block w-full px-4 py-3.5 text-base font-medium text-foreground rounded-xl bg-accent/30 hover:bg-accent/60 active:bg-accent/80 border border-transparent hover:border-border/50 transition-[background-color,border-color,transform] duration-200 ease-out active:scale-[0.99]"
                 >
                   {item.name}

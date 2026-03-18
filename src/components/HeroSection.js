@@ -178,13 +178,13 @@ export function HeroSection() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Button
             size="lg"
+            asChild
             className="h-12 px-8 text-base rounded-full bg-[hsl(var(--accent-brand))] text-[hsl(var(--accent-brand-foreground))] hover:opacity-90 transition-[opacity,transform] duration-200 ease-[cubic-bezier(0.33,1,0.68,1)] hover:scale-105 active:scale-[0.98]"
-            onClick={() => {
-              document.querySelector('#premium-courses')?.scrollIntoView({ behavior: 'smooth' })
-            }}
           >
-            Ver cursos
-            <ArrowRight size={18} className="ml-2" />
+            <a href="#premium-courses">
+              Ver cursos
+              <ArrowRight size={18} className="ml-2" />
+            </a>
           </Button>
           <Button
             asChild

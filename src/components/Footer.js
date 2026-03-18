@@ -17,14 +17,6 @@ const navigation = [
 ]
 
 export function Footer() {
-  const handleNavClick = (e, href) => {
-    e.preventDefault()
-    const element = document.querySelector(href)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-    }
-  }
-
   return (
     <footer className="border-t border-border/50">
       <div className="max-w-6xl mx-auto px-6 py-12 md:py-16">
@@ -52,7 +44,6 @@ export function Footer() {
               <Link
                 key={item.name}
                 href={item.href}
-                onClick={(e) => handleNavClick(e, item.href)}
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 ease-out"
               >
                 {item.name}

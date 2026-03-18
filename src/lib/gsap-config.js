@@ -7,7 +7,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 // Anchor links (#section) and smooth scrolling are handled by Lenis (LenisProvider with anchors)
 export function useSmoothScroll() {
   // Reserved for additional logic if needed; Lenis already handles anchors.
-  // Si a futuro añadimos lógica aquí, debe respetar prefers-reduced-motion/saveData.
+  // If we add logic here in the future, it must respect prefers-reduced-motion/saveData.
 }
 
 // Machone-style pattern: ScrollTrigger + Lenis for entrance animations on viewport.
@@ -44,12 +44,12 @@ export function useScrollAnimations() {
     const isSmallScreen = window.innerWidth < 768
 
     function initAnimations() {
-      // Respetamos usuarios que piden menos movimiento, ahorro de datos o pantallas pequeñas.
+      // Respect users who request reduced motion, data saving, or are on small screens.
       if (prefersReducedMotion || saveData || isSmallScreen) return
 
       const sections = document.querySelectorAll('section')
       sections.forEach((section, index) => {
-        // Saltar la primera sección (hero), ya tiene su propia animación
+        // Skip the first section (hero), it already has its own animation
         if (index === 0 || section.closest('[data-skip-reveal]')) return
 
         const tl = reveal(
@@ -71,7 +71,7 @@ export function useScrollAnimations() {
       ScrollTrigger.refresh()
     }
 
-    // Initialize de forma diferida para no competir con el primer render.
+    // Initialize lazily so it does not compete with the first render.
     if ('requestIdleCallback' in window) {
       window.requestIdleCallback(initAnimations)
     } else {

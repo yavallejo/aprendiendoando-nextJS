@@ -10,7 +10,7 @@ export async function GET() {
   const subscriberEstimateEnv = process.env.YOUTUBE_SUBSCRIBERS_ESTIMATE
   const subscriberEstimate =
     typeof subscriberEstimateEnv === 'string' &&
-    subscriberEstimateEnv.trim() !== ''
+      subscriberEstimateEnv.trim() !== ''
       ? parseInt(subscriberEstimateEnv, 10)
       : null
 
@@ -67,7 +67,6 @@ export async function GET() {
       } else {
         const html = await htmlResponse.text()
 
-        // Extraer de forma robusta el bloque de JSON de ytInitialData.
         // YouTube puede usar diferentes formas: window["ytInitialData"] = {...}; o var ytInitialData = {...};
         let initialDataMatch =
           html.match(/ytInitialData"\]\s*=\s*(\{.*?\});<\/script>/s) ||

@@ -22,8 +22,8 @@ export function LenisProvider({ children }) {
     const saveData = typeof navigator !== 'undefined' && navigator.connection?.saveData
     const isSmallScreen = window.innerWidth < 768
 
-    // En móviles, usuarios con ahorro de datos o que piden menos movimiento
-    // no inicializamos Lenis para proteger INP y batería.
+    // On mobile, for users with data saving enabled or who request less motion,
+    // we do not initialize Lenis to protect INP and battery.
     if (prefersReducedMotion || saveData || isSmallScreen) {
       return
     }
@@ -37,10 +37,9 @@ export function LenisProvider({ children }) {
         smoothWheel: true,
         wheelMultiplier: 1,
         touchMultiplier: 2,
-        // Anchor links with offset for fixed header (~80px)
-        anchors: {
-          offset: 80,
-        },
+        // Disable Lenis anchor handling so that
+        // the browser uses native behavior + CSS scroll-margin-top.
+        anchors: null,
         // Sync with GSAP ScrollTrigger
         autoRaf: false,
       })
@@ -75,7 +74,7 @@ export function LenisProvider({ children }) {
     }
   }, [])
 
-  // App Router: scroll al inicio cuando cambia el pathname
+  // App Router: scroll to top when pathname changes
   useEffect(() => {
     const lenis = lenisRef.current
     if (lenis) {

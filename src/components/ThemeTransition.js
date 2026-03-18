@@ -5,19 +5,19 @@ import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { consumeThemeTransitionOrigin } from '@/lib/themeTransitionOrigin'
 
-// Motion design: easing that lands suavemente al final (Slow In & Slow Out)
+// Motion design: easing that lands smoothly at the end (Slow In & Slow Out)
 const EASE_CIRCLE = 'power2.out'
 const EASE_RING = 'power2.in'
 
-// Timing: un solo gesto claro + follow-through suave
+// Timing: a single clear gesture + soft follow-through
 const DURATION_CIRCLE = 0.7
 const DURATION_RING = 0.55
 const RING_DELAY = 0.06
 
 /**
  * Full-page theme transition.
- * Un solo gesto principal: círculo que se cierra desde el click.
- * El anillo funciona como acción secundaria en follow-through.
+ * One primary gesture: a circle that closes from the click.
+ * The ring acts as a secondary follow-through action.
  */
 export function ThemeTransition() {
   const { theme, resolvedTheme } = useTheme()
@@ -105,7 +105,7 @@ export function ThemeTransition() {
       },
     })
 
-    // Gesto principal: el círculo se recoge hasta el punto de click
+    // Main gesture: the circle collapses into the click point
     tl.to(overlay, {
       clipPath: `circle(0px at ${ox}px ${oy}px)`,
       duration: DURATION_CIRCLE,
@@ -113,7 +113,7 @@ export function ThemeTransition() {
       overwrite: true,
     }, 0)
 
-    // Acción secundaria: el anillo sigue y se desvanece un poco más tarde
+    // Secondary action: the ring follows and fades out slightly later
     if (ring) {
       tl.to(ring, {
         scale: 2.4,
@@ -141,7 +141,7 @@ export function ThemeTransition() {
   return (
     <div
       ref={overlayRef}
-      className="fixed inset-0 z-[9999] pointer-events-none"
+      className="fixed inset-0 z-9999 pointer-events-none"
       style={{
         background: bg,
         clipPath: `circle(150vmax at ${ox}px ${oy}px)`,

@@ -29,6 +29,8 @@
   --input: 0 0% 89.8%;
   --ring: 0 0% 3.9%;
   --radius: 0.5rem;
+  /* Fixed header height used for scroll offsets */
+  --header-height: 2rem; /* h-16 */
 }
 
 .dark {
@@ -62,7 +64,13 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 80px; /* Fixing the 1070px value which causes jumping when selecting text */
+}
+
+/* Ensures that sections with anchors are not hidden behind the fixed header.
+   Any <section id="..."> automatically benefits when navigating with anchors (#about-me, etc.) */
+section[id] {
+  /* Proportional offset: header height + soft visual margin */
+  scroll-margin-top: calc(var(--header-height) + 1.5rem);
 }
 
 /* Custom Text Selection */

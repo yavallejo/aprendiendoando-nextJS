@@ -8,7 +8,7 @@ export async function POST(request) {
 
   if (!name || !email || !message) {
     return NextResponse.json(
-      { error: 'Faltan campos requeridos.' },
+      { error: 'Missing required fields.' },
       { status: 400 }
     )
   }
@@ -20,7 +20,7 @@ export async function POST(request) {
       return NextResponse.json(
         {
           error:
-            'Configuración del servidor incompleta. Falta RESEND_API_KEY o CONTACT_EMAIL.',
+            'Incomplete server configuration. RESEND_API_KEY or CONTACT_EMAIL is missing.',
         },
         { status: 500 }
       )
@@ -50,9 +50,9 @@ export async function POST(request) {
 
     return NextResponse.json({ ok: true }, { status: 200 })
   } catch (error) {
-    console.error('Error enviando email de contacto:', error)
+    console.error('Error sending contact email:', error)
     return NextResponse.json(
-      { error: 'Error al enviar el mensaje.' },
+      { error: 'Error sending message.' },
       { status: 500 }
     )
   }

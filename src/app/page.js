@@ -24,7 +24,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <main>
+      <main style={{ paddingTop: 'var(--header-height)' }}>
         <HeroSection />
         <AboutSection />
         <YouTubeSection />
