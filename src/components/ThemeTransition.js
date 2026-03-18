@@ -5,22 +5,19 @@ import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { consumeThemeTransitionOrigin } from '@/lib/themeTransitionOrigin'
 
-// Motion design: easing that lands softly at the end (Slow In & Slow Out)
-const EASE_CIRCLE = 'power2.out' // more frames near the end = gentle settle at origin
-const EASE_RING = 'power2.in'    // ring accelerates away, follow-through
+// Motion design: easing that lands suavemente al final (Slow In & Slow Out)
+const EASE_CIRCLE = 'power2.out'
+const EASE_RING = 'power2.in'
 
-// Timing (heartbeat of animation): primary leads, secondary lags (Follow Through)
-const DURATION_ANTICIPATION = 0.04  // brief wind-up before main action
-const DURATION_CIRCLE = 0.7       // primary wipe
-const DURATION_RING = 0.55        // secondary, slightly shorter
-const RING_DELAY = 0.06           // overlap: ring starts after circle has begun
+// Timing: un solo gesto claro + follow-through suave
+const DURATION_CIRCLE = 0.7
+const DURATION_RING = 0.55
+const RING_DELAY = 0.06
 
 /**
- * Full-page theme transition. Motion design:
- * - Anticipation: tiny hold/expand at origin before the wipe.
- * - Staging: one clear idea—circle from click; ring is secondary.
- * - Follow through: ring lags and trails (stagger + overlapping).
- * - Slow in/out: circle eases into the click point; ring eases out of existence.
+ * Full-page theme transition.
+ * Un solo gesto principal: círculo que se cierra desde el click.
+ * El anillo funciona como acción secundaria en follow-through.
  */
 export function ThemeTransition() {
   const { theme, resolvedTheme } = useTheme()
@@ -76,8 +73,14 @@ export function ThemeTransition() {
 
     const w = window.innerWidth
     const h = window.innerHeight
-    const radiusStart = Math.sqrt(Math.max(ox * ox + oy * oy, (w - ox) ** 2 + oy * oy, ox * ox + (h - oy) ** 2, (w - ox) ** 2 + (h - oy) ** 2)) + 80
-    const radiusAnticipation = radiusStart * 1.015 // subtle wind-up: slight expand before shrink
+    const radiusStart = Math.sqrt(
+      Math.max(
+        ox * ox + oy * oy,
+        (w - ox) ** 2 + oy * oy,
+        ox * ox + (h - oy) ** 2,
+        (w - ox) ** 2 + (h - oy) ** 2
+      )
+    ) + 80
 
     gsap.set(overlay, {
       clipPath: `circle(${radiusStart}px at ${ox}px ${oy}px)`,
@@ -102,30 +105,22 @@ export function ThemeTransition() {
       },
     })
 
-    // Anticipation: brief expand so the wipe feels intentional (wind-up before action)
-    tl.to(overlay, {
-      clipPath: `circle(${radiusAnticipation}px at ${ox}px ${oy}px)`,
-      duration: DURATION_ANTICIPATION,
-      ease: 'power2.out',
-      overwrite: true,
-    }, 0)
-
-    // Primary action: circle shrinks to origin with soft landing (slow in/out)
+    // Gesto principal: el círculo se recoge hasta el punto de click
     tl.to(overlay, {
       clipPath: `circle(0px at ${ox}px ${oy}px)`,
       duration: DURATION_CIRCLE,
       ease: EASE_CIRCLE,
       overwrite: true,
-    }, DURATION_ANTICIPATION)
+    }, 0)
 
-    // Secondary action: ring follows and trails (overlapping, stagger)
+    // Acción secundaria: el anillo sigue y se desvanece un poco más tarde
     if (ring) {
       tl.to(ring, {
         scale: 2.4,
         opacity: 0,
         duration: DURATION_RING,
         ease: EASE_RING,
-      }, DURATION_ANTICIPATION + RING_DELAY)
+      }, RING_DELAY)
     }
 
     animationRef.current = tl
