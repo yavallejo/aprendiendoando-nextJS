@@ -18,18 +18,6 @@ export const metadata = {
   title: 'AprendiendoAndo - Productividad y desarrollo web para Mac',
   description:
     'Aprende productividad para desarrolladores en Mac: terminal, Git, herramientas y WordPress avanzado para optimizar tu flujo de trabajo diario.',
-  openGraph: {
-    title: 'AprendiendoAndo - Productividad y Desarrollo Web',
-    description:
-      'Domina tu terminal, Git, herramientas en Mac y WordPress avanzado. Aprende y mejora tu flujo de trabajo.',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'AprendiendoAndo - Productividad y Desarrollo Web',
-    description:
-      'Domina tu terminal, Git, herramientas en Mac y WordPress avanzado. Aprende y mejora tu flujo de trabajo.',
-  },
 }
 
 export default function HomePage() {
