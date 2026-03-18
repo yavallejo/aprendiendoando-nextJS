@@ -1,27 +1,29 @@
+import { NextResponse } from 'next/server'
 import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
-export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    res.setHeader('Allow', ['POST'])
-    return res.status(405).json({ error: 'Method not allowed' })
-  }
-
-  const { name, email, company, message } = req.body || {}
+export async function POST(request) {
+  const { name, email, company, message } = (await request.json()) || {}
 
   if (!name || !email || !message) {
-    return res.status(400).json({ error: 'Faltan campos requeridos.' })
+    return NextResponse.json(
+      { error: 'Faltan campos requeridos.' },
+      { status: 400 }
+    )
   }
 
   try {
     const toEmail = process.env.CONTACT_EMAIL
 
     if (!process.env.RESEND_API_KEY || !toEmail) {
-      return res.status(500).json({
-        error:
-          'Configuración del servidor incompleta. Falta RESEND_API_KEY o CONTACT_EMAIL.',
-      })
+      return NextResponse.json(
+        {
+          error:
+            'Configuración del servidor incompleta. Falta RESEND_API_KEY o CONTACT_EMAIL.',
+        },
+        { status: 500 }
+      )
     }
 
     await resend.emails.send({
@@ -46,10 +48,13 @@ export default async function handler(req, res) {
       `,
     })
 
-    return res.status(200).json({ ok: true })
+    return NextResponse.json({ ok: true }, { status: 200 })
   } catch (error) {
     console.error('Error enviando email de contacto:', error)
-    return res.status(500).json({ error: 'Error al enviar el mensaje.' })
+    return NextResponse.json(
+      { error: 'Error al enviar el mensaje.' },
+      { status: 500 }
+    )
   }
 }
 

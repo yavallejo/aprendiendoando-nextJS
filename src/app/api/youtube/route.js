@@ -1,8 +1,6 @@
-export default async function handler(req, res) {
-  if (req.method !== 'GET') {
-    return res.status(405).json({ error: 'Method not allowed' })
-  }
+import { NextResponse } from 'next/server'
 
+export async function GET() {
   // Try the public YouTube RSS feed first (no API key or quota required).
   // You need the static channelId for your YouTube channel.
   // Example feed URL: https://www.youtube.com/feeds/videos.xml?channel_id=UCxxxxxxxxxxxx
@@ -11,7 +9,8 @@ export default async function handler(req, res) {
   const channelHandle = process.env.YOUTUBE_CHANNEL_HANDLE || '@AprendiendoAndo'
   const subscriberEstimateEnv = process.env.YOUTUBE_SUBSCRIBERS_ESTIMATE
   const subscriberEstimate =
-    typeof subscriberEstimateEnv === 'string' && subscriberEstimateEnv.trim() !== ''
+    typeof subscriberEstimateEnv === 'string' &&
+    subscriberEstimateEnv.trim() !== ''
       ? parseInt(subscriberEstimateEnv, 10)
       : null
 
@@ -137,15 +136,24 @@ export default async function handler(req, res) {
       }
     }
 
-    return res.status(200).json({
-      subscriberCount: Number.isNaN(subscriberEstimate) ? null : subscriberEstimate,
-      videos,
-    })
+    return NextResponse.json(
+      {
+        subscriberCount: Number.isNaN(subscriberEstimate)
+          ? null
+          : subscriberEstimate,
+        videos,
+      },
+      { status: 200 }
+    )
   } catch (error) {
     console.error('YouTube API error:', error)
-    return res.status(500).json({
-      error: 'Failed to fetch YouTube data',
-      message: error.message,
-    })
+    return NextResponse.json(
+      {
+        error: 'Failed to fetch YouTube data',
+        message: error.message,
+      },
+      { status: 500 }
+    )
   }
 }
+

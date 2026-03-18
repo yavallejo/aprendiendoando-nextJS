@@ -1,7 +1,9 @@
-import dynamic from 'next/dynamic'
+'use client'
+
 import '@/styles/globals.css'
 import { rethinkSans, geist } from '@/lib/fonts'
 import { ThemeProvider } from '@/components/ThemeProvider'
+import dynamic from 'next/dynamic'
 import { ThemeTransition } from '@/components/ThemeTransition'
 
 const LenisProvider = dynamic(
@@ -14,7 +16,7 @@ const GSAPProvider = dynamic(
   { ssr: false }
 )
 
-export default function App({ Component, pageProps }) {
+export function Providers({ children }) {
   return (
     <ThemeProvider
       attribute="class"
@@ -25,7 +27,7 @@ export default function App({ Component, pageProps }) {
       <div className={`${rethinkSans.variable} ${geist.variable} font-body`}>
         <LenisProvider>
           <GSAPProvider>
-            <Component {...pageProps} />
+            {children}
             <ThemeTransition />
           </GSAPProvider>
         </LenisProvider>
@@ -33,3 +35,4 @@ export default function App({ Component, pageProps }) {
     </ThemeProvider>
   )
 }
+

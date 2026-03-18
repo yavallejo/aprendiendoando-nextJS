@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 import Lenis from 'lenis'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -13,7 +13,7 @@ const EASING = (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
 export function LenisProvider({ children }) {
   const lenisRef = useRef(null)
   const tickerCallbackRef = useRef(null)
-  const router = useRouter()
+  const pathname = usePathname()
 
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -75,18 +75,13 @@ export function LenisProvider({ children }) {
     }
   }, [])
 
-  // Next.js: scroll al inicio en cambio de ruta
+  // App Router: scroll al inicio cuando cambia el pathname
   useEffect(() => {
-    const handleRouteChange = () => {
-      const lenis = lenisRef.current
-      if (lenis) {
-        lenis.scrollTo(0, { immediate: true, force: true })
-      }
+    const lenis = lenisRef.current
+    if (lenis) {
+      lenis.scrollTo(0, { immediate: true, force: true })
     }
-
-    router.events.on('routeChangeComplete', handleRouteChange)
-    return () => router.events.off('routeChangeComplete', handleRouteChange)
-  }, [router.events])
+  }, [pathname])
 
   return <>{children}</>
 }
