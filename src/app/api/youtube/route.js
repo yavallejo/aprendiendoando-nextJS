@@ -67,10 +67,11 @@ export async function GET() {
       } else {
         const html = await htmlResponse.text()
 
-        // Extraer el bloque de JSON de ytInitialData
-        const initialDataMatch = html.match(
-          /ytInitialData"\]\s*=\s*(\{.*?\});<\/script>/s
-        )
+        // Extraer de forma robusta el bloque de JSON de ytInitialData.
+        // YouTube puede usar diferentes formas: window["ytInitialData"] = {...}; o var ytInitialData = {...};
+        let initialDataMatch =
+          html.match(/ytInitialData"\]\s*=\s*(\{.*?\});<\/script>/s) ||
+          html.match(/ytInitialData\s*=\s*(\{.*?\});<\/script>/s)
 
         if (initialDataMatch) {
           try {
