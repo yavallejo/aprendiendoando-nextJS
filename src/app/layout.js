@@ -1,4 +1,5 @@
 import { Providers } from './providers'
+import { GoogleAnalytics } from '@/components/GoogleAnalytics'
 
 const siteName = 'AprendiendoAndo'
 const siteUrl = 'https://www.aprendiendoando.com'
@@ -44,6 +45,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="es" suppressHydrationWarning>
       <body>
+        <GoogleAnalytics />
         <Providers>{children}</Providers>
       </body>
     </html>

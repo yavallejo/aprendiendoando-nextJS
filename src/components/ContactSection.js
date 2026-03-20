@@ -9,6 +9,8 @@ import { Label } from '@/components/ui/label'
 import { Send, CheckCircle, AlertCircle, Mail, MessageSquare } from 'lucide-react'
 
 export function ContactSection() {
+  const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -43,6 +45,18 @@ export function ContactSection() {
 
       setSubmitStatus('success')
       setFormData({ name: '', email: '', company: '', message: '' })
+
+      // GA4 conversion event: lead generated from contact form
+      if (
+        measurementId &&
+        typeof window !== 'undefined' &&
+        typeof window.gtag === 'function'
+      ) {
+        window.gtag('event', 'generate_lead', {
+          send_to: measurementId,
+          lead_source: 'contact_form',
+        })
+      }
     } catch (error) {
       setSubmitStatus('error')
     } finally {
@@ -76,7 +90,7 @@ export function ContactSection() {
             {/* Contact options */}
             <div className="space-y-6">
               <div className="flex gap-4 items-start">
-                <div className="flex flex-shrink-0 justify-center items-center w-12 h-12 rounded-xl bg-accent/50 text-foreground">
+                <div className="flex shrink-0 justify-center items-center w-12 h-12 rounded-xl bg-accent/50 text-foreground">
                   <Mail size={22} />
                 </div>
                 <div>
@@ -88,7 +102,7 @@ export function ContactSection() {
               </div>
 
               <div className="flex gap-4 items-start">
-                <div className="flex flex-shrink-0 justify-center items-center w-12 h-12 rounded-xl bg-accent/50 text-foreground">
+                <div className="flex shrink-0 justify-center items-center w-12 h-12 rounded-xl bg-accent/50 text-foreground">
                   <MessageSquare size={22} />
                 </div>
                 <div>
