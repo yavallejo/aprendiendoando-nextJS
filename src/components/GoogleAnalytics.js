@@ -1,4 +1,5 @@
 import Script from 'next/script'
+import { Suspense } from 'react'
 import GAPageViewsClient from './GAPageViewsClient'
 
 const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
@@ -22,7 +23,9 @@ export function GoogleAnalytics() {
           });
         `}
       </Script>
-      <GAPageViewsClient measurementId={measurementId} />
+      <Suspense fallback={null}>
+        <GAPageViewsClient measurementId={measurementId} />
+      </Suspense>
     </>
   )
 }
