@@ -1,32 +1,39 @@
 'use client'
 
 import Image from 'next/image'
+import { useMemo } from 'react'
 import { Code2, Globe, Users, Rocket } from 'lucide-react'
-
-const features = [
-  {
-    icon: Code2,
-    title: 'Desarrollador Web',
-    description: 'Más de 13 años creando soluciones web y flujos de trabajo eficientes.',
-  },
-  {
-    icon: Globe,
-    title: 'Experiencia Global',
-    description: 'Trabajo remoto con equipos de Perú, México, USA, Austria, Costa Rica y Colombia.',
-  },
-  {
-    icon: Users,
-    title: 'Comunidad WordPress',
-    description: 'Organizador de la comunidad local de WordPress, compartiendo conocimiento mes a mes.',
-  },
-  {
-    icon: Rocket,
-    title: 'Productividad Extrema',
-    description: 'Enseño herramientas reales que uso en el día a día para trabajar mejor y más rápido.',
-  },
-]
+import { useLanguage } from '@/components/LanguageProvider'
 
 export function AboutSection() {
+  const { t, lang } = useLanguage()
+
+  const features = useMemo(
+    () => [
+      {
+        icon: Code2,
+        title: t('about.feature1Title'),
+        description: t('about.feature1Desc'),
+      },
+      {
+        icon: Globe,
+        title: t('about.feature2Title'),
+        description: t('about.feature2Desc'),
+      },
+      {
+        icon: Users,
+        title: t('about.feature3Title'),
+        description: t('about.feature3Desc'),
+      },
+      {
+        icon: Rocket,
+        title: t('about.feature4Title'),
+        description: t('about.feature4Desc'),
+      },
+    ],
+    [t, lang]
+  )
+
   return (
     <section id="about-me" className="overflow-hidden relative py-12 md:py-24">
       {/* Background accent */}
@@ -40,7 +47,7 @@ export function AboutSection() {
             <div className="overflow-hidden relative border aspect-square md:aspect-4/5 rounded-4xl border-border/30 bg-accent/5">
               <Image
                 src="/yan-vallejo.jpg"
-                alt="Yan Vallejo en su espacio de trabajo"
+                alt={t('about.imageAlt')}
                 fill
                 sizes="(min-width: 1024px) 480px, (min-width: 768px) 50vw, 100vw"
                 priority={false}
@@ -54,25 +61,26 @@ export function AboutSection() {
             {/* Floating experience badge */}
             <div className="absolute -right-6 -bottom-6 p-6 rounded-2xl border shadow-xl backdrop-blur-sm transition-transform duration-300 -rotate-3 md:-right-8 bg-card border-border/50 hover:rotate-0">
               <div className="text-3xl font-bold text-foreground">13+</div>
-              <div className="text-sm font-medium text-muted-foreground">Años programando</div>
+              <div className="text-sm font-medium text-muted-foreground">{t('about.yearsBadge')}</div>
             </div>
           </div>
 
           {/* Right column: content */}
           <div className="mt-8 lg:col-span-7 lg:mt-0">
             <span className="inline-block px-4 py-1.5 mb-6 text-xs font-semibold uppercase tracking-[0.18em] rounded-full shadow-sm border bg-[hsl(var(--accent-brand))] text-[hsl(var(--accent-brand-foreground))] border-[hsl(var(--accent-brand))]">
-              Perfil del Creador
+              {t('about.badge')}
             </span>
 
             <h2 className="mb-6 text-4xl font-bold tracking-tight md:text-5xl">
               <span className="dark:gradient-text gradient-text-light">
-                Hola, soy Yan Vallejo
+                {t('about.heading')}
               </span>
             </h2>
 
             <p className="mb-10 text-lg leading-relaxed text-muted-foreground">
-              Creador de <strong className="text-foreground">AprendiendoAndo</strong>.
-              Mi misión es compartirte el conjunto de herramientas exactas (workflows en Mac, terminal, Git, WordPress) que uso en el mundo real para que seas un desarrollador más eficiente.
+              {t('about.introBefore')}
+              <strong className="text-foreground">AprendiendoAndo</strong>
+              {t('about.introAfter')}
             </p>
 
             {/* Features grid */}

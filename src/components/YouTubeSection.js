@@ -4,11 +4,13 @@ import Image from 'next/image'
 import useSWR from 'swr'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { useLanguage } from '@/components/LanguageProvider'
 import { Youtube, Users, Play, ExternalLink } from 'lucide-react'
 
 const fetcher = (url) => fetch(url).then((res) => res.json())
 
 export function YouTubeSection() {
+  const { t, lang } = useLanguage()
   const { data, isLoading } = useSWR('/api/youtube', fetcher)
   const subscriberCount = data?.subscriberCount ?? null
   const videos = data?.videos ?? []
@@ -24,6 +26,7 @@ export function YouTubeSection() {
   ]
 
   const displayVideos = videos.length > 0 ? videos : placeholderVideos
+  const dateLocale = lang === 'en' ? 'en-US' : 'es-ES'
 
   return (
     <section id="videos" className="relative py-12 md:py-16">
@@ -32,15 +35,15 @@ export function YouTubeSection() {
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-16">
           <div>
             <span className="inline-block px-4 py-1.5 mb-6 text-xs font-medium uppercase tracking-wider text-muted-foreground border border-border/50 rounded-full">
-              YouTube
+              {t('youtube.badge')}
             </span>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
               <span className="dark:gradient-text gradient-text-light">
-                Últimos videos
+                {t('youtube.headline')}
               </span>
             </h2>
             <p className="text-lg text-muted-foreground max-w-xl">
-              Tutoriales útiles, tips de terminal y herramientas de productividad para mejorar tu día a día como desarrollador en el ecosistema Mac.
+              {t('youtube.description')}
             </p>
           </div>
 
@@ -50,9 +53,9 @@ export function YouTubeSection() {
               <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-accent/30 border border-border/50">
                 <Users size={18} className="text-muted-foreground" />
                 <span className="text-lg font-semibold text-foreground">
-                  {subscriberCount.toLocaleString()}
+                  {subscriberCount.toLocaleString(dateLocale)}
                 </span>
-                <span className="text-sm text-muted-foreground">suscriptores</span>
+                <span className="text-sm text-muted-foreground">{t('youtube.subscribers')}</span>
               </div>
             ) : null}
           </div>
@@ -99,7 +102,7 @@ export function YouTubeSection() {
                     {video.title}
                   </h3>
                   <p className="text-sm text-muted-foreground">
-                    {new Date(video.publishedAt).toLocaleDateString('es-ES', {
+                    {new Date(video.publishedAt).toLocaleDateString(dateLocale, {
                       year: 'numeric',
                       month: 'short',
                       day: 'numeric',
@@ -124,7 +127,7 @@ export function YouTubeSection() {
               rel="noopener noreferrer"
               className="flex items-center gap-2"
             >
-              Ver todos los videos
+              {t('youtube.viewAll')}
               <ExternalLink size={16} />
             </a>
           </Button>

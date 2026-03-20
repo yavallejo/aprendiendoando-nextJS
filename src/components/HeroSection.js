@@ -1,10 +1,11 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Button } from '@/components/ui/button'
 import { BGPattern } from '@/components/ui/bg-pattern'
+import { useLanguage } from '@/components/LanguageProvider'
 import { Youtube, ArrowRight } from 'lucide-react'
 
 const subscriberEstimate =
@@ -13,20 +14,29 @@ const subscriberEstimate =
     ? parseInt(process.env.NEXT_PUBLIC_YOUTUBE_SUBSCRIBERS_ESTIMATE, 10)
     : null
 
-const STATS = [
-  { num: 13, suffix: '+', label: 'Años de experiencia' },
-  { num: 6, suffix: '+', label: 'Países remotos' },
-  {
-    num: subscriberEstimate && !Number.isNaN(subscriberEstimate) ? subscriberEstimate : 12000,
-    suffix: '+',
-    label: 'Suscriptores',
-  },
-  { num: 300, suffix: '+', label: 'Videos publicados' },
-]
-
 gsap.registerPlugin(ScrollTrigger)
 
 export function HeroSection() {
+  const { t, lang } = useLanguage()
+
+  const STATS = useMemo(
+    () => [
+      { num: 13, suffix: '+', label: t('hero.statYears') },
+      { num: 6, suffix: '+', label: t('hero.statCountries') },
+      {
+        num:
+          subscriberEstimate && !Number.isNaN(subscriberEstimate)
+            ? subscriberEstimate
+            : 12000,
+        suffix: '+',
+        label: t('hero.statSubscribers'),
+      },
+      { num: 300, suffix: '+', label: t('hero.statVideos') },
+    ],
+    [t, lang]
+  )
+
+  const numberLocale = lang === 'en' ? 'en-US' : 'es-ES'
   const heroRef = useRef(null)
   const headlineRef = useRef(null)
   const sublineRef = useRef(null)
@@ -100,7 +110,8 @@ export function HeroSection() {
           ease: 'power2.out',
           snap: { val: 1 },
           onUpdate: () => {
-            el.textContent = Math.round(obj.val).toLocaleString() + stat.suffix
+            el.textContent =
+              Math.round(obj.val).toLocaleString(numberLocale) + stat.suffix
           },
         })
       })
@@ -127,7 +138,7 @@ export function HeroSection() {
       countUpTrigger.current?.kill()
       countUpTrigger.current = null
     }
-  }, [])
+  }, [STATS, numberLocale])
 
   return (
     <section
@@ -156,22 +167,22 @@ export function HeroSection() {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
           </span>
-          <span className="text-sm text-muted-foreground">+13 años de experiencia</span>
+          <span className="text-sm text-muted-foreground">{t('hero.badge')}</span>
         </div>
 
         {/* Headline and subheadline: plain DOM text (always visible), block-based animation */}
         <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 leading-[0.95]">
           <span ref={headlineRef} className="dark:gradient-text gradient-text-light inline-block">
-            Productividad y
+            {t('hero.headline')}
           </span>
           <br />
           <span ref={sublineRef} className="text-muted-foreground inline-block">
-            Desarrollo Web
+            {t('hero.subline')}
           </span>
         </h1>
 
         <p ref={subheadlineRef} className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-relaxed">
-          Domina la terminal, exprime el ecosistema de Mac, lleva tu flujo de trabajo al extremo y descubre el desarrollo avanzando con WordPress.
+          {t('hero.subheadline')}
         </p>
 
         {/* Primary CTA buttons */}
@@ -182,7 +193,7 @@ export function HeroSection() {
             className="h-12 px-8 text-base rounded-full bg-[hsl(var(--accent-brand))] text-[hsl(var(--accent-brand-foreground))] hover:opacity-90 transition-[opacity,transform] duration-200 ease-[cubic-bezier(0.33,1,0.68,1)] hover:scale-105 active:scale-[0.98]"
           >
             <a href="#premium-courses">
-              Ver cursos
+              {t('hero.ctaCourses')}
               <ArrowRight size={18} className="ml-2" />
             </a>
           </Button>
@@ -199,7 +210,7 @@ export function HeroSection() {
               className="flex items-center gap-2"
             >
               <Youtube size={20} />
-              Canal de YouTube
+              {t('hero.ctaYoutube')}
             </a>
           </Button>
         </div>

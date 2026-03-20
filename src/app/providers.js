@@ -3,6 +3,7 @@
 import '@/styles/globals.css'
 import { rethinkSans, geist } from '@/lib/fonts'
 import { ThemeProvider } from '@/components/ThemeProvider'
+import { LanguageProvider } from '@/components/LanguageProvider'
 import dynamic from 'next/dynamic'
 import { ThemeTransition } from '@/components/ThemeTransition'
 
@@ -24,14 +25,16 @@ export function Providers({ children }) {
       enableSystem
       disableTransitionOnChange
     >
-      <div className={`${rethinkSans.variable} ${geist.variable} font-body`}>
-        <LenisProvider>
-          <GSAPProvider>
-            {children}
-            <ThemeTransition />
-          </GSAPProvider>
-        </LenisProvider>
-      </div>
+      <LanguageProvider>
+        <div className={`${rethinkSans.variable} ${geist.variable} font-body`}>
+          <LenisProvider>
+            <GSAPProvider>
+              {children}
+              <ThemeTransition />
+            </GSAPProvider>
+          </LenisProvider>
+        </div>
+      </LanguageProvider>
     </ThemeProvider>
   )
 }

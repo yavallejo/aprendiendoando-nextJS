@@ -5,19 +5,22 @@ import Link from 'next/link'
 import { gsap } from 'gsap'
 import { SplitText } from 'gsap/SplitText'
 import { ThemeToggle } from './ThemeToggle'
+import { LanguageToggle } from './LanguageToggle'
+import { useLanguage } from './LanguageProvider'
 import { Menu, X, Youtube } from 'lucide-react'
 
 const YOUTUBE_SUBSCRIBE_URL = 'https://www.youtube.com/@AprendiendoAndo?sub_confirmation=1'
 
-const navigation = [
-  { name: 'Sobre mí', href: '#about-me' },
-  { name: 'Videos', href: '#videos' },
-  { name: 'Contacto', href: '#contact' },
+const NAV_ITEMS = [
+  { key: 'nav.about', href: '#about-me' },
+  { key: 'nav.videos', href: '#videos' },
+  { key: 'nav.contact', href: '#contact' },
 ]
 
 const STICKY_SCROLL_THRESHOLD = 20
 
 export function Header() {
+  const { t } = useLanguage()
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const headerRef = useRef(null)
@@ -310,9 +313,9 @@ export function Header() {
           {/* Desktop navigation — centered */}
           <nav className="hidden md:flex flex-1 items-center justify-center">
             <div className="flex items-center gap-1">
-              {navigation.map((item) => (
+              {NAV_ITEMS.map((item) => (
                 <Link
-                  key={item.name}
+                  key={item.href}
                   href={item.href}
                   onClick={handleNavClick}
                   className="nav-link group relative px-4 py-2.5 text-sm text-muted-foreground rounded-full
@@ -320,7 +323,7 @@ export function Header() {
                     hover:text-foreground hover:bg-accent/60 hover:-translate-y-0.5 hover:scale-[1.03]
                     active:scale-[0.98] active:translate-y-0"
                 >
-                  <span className="relative z-10">{item.name}</span>
+                  <span className="relative z-10">{t(item.key)}</span>
                   <span
                     className="absolute inset-0 rounded-full bg-accent/40 scale-0 opacity-0
                       group-hover:scale-100 group-hover:opacity-100
@@ -345,17 +348,18 @@ export function Header() {
               target="_blank"
               rel="noopener noreferrer"
               className="hidden sm:inline-flex items-center justify-center gap-2 h-10 px-4 rounded-xl text-sm font-medium transition-[color,background-color,transform] duration-200 ease-out hover:scale-[1.02] active:scale-[0.98] bg-[hsl(var(--accent-brand))] text-[hsl(var(--accent-brand-foreground))] hover:opacity-90"
-              aria-label="Suscribirse al canal de YouTube"
+              aria-label={t('nav.subscribeAria')}
             >
               <Youtube size={18} aria-hidden />
-              Suscribirme
+              {t('nav.subscribe')}
             </a>
             <ThemeToggle />
+            <LanguageToggle />
 
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="md:hidden p-2 text-muted-foreground hover:text-foreground transition-[color,transform] duration-200 ease-out hover:scale-105 active:scale-95"
-              aria-label="Toggle menu"
+              aria-label={t('nav.toggleMenu')}
             >
               {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
@@ -372,18 +376,18 @@ export function Header() {
           <nav
             ref={mobileNavRef}
             className="w-full py-4 px-6"
-            aria-label="Menú principal"
+            aria-label={t('nav.mainMenu')}
           >
             <div className="flex flex-col gap-1">
-              {navigation.map((item, index) => (
+              {NAV_ITEMS.map((item, index) => (
                 <Link
-                  key={item.name}
+                  key={item.href}
                   ref={(el) => { mobileNavItemsRef.current[index] = el }}
                   href={item.href}
                   onClick={handleNavClick}
                   className="block w-full px-4 py-3.5 text-base font-medium text-foreground rounded-xl bg-accent/30 hover:bg-accent/60 active:bg-accent/80 border border-transparent hover:border-border/50 transition-[background-color,border-color,transform] duration-200 ease-out active:scale-[0.99]"
                 >
-                  {item.name}
+                  {t(item.key)}
                 </Link>
               ))}
             </div>

@@ -1,43 +1,50 @@
 'use client'
 
+import { useMemo } from 'react'
 import { courses } from '@/data/courses'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { useLanguage } from '@/components/LanguageProvider'
 import { Users, Star, GraduationCap, ArrowUpRight, Sparkles } from 'lucide-react'
 
-// Placeholder courses for when course data is not configured
-const placeholderCourses = [
-  {
-    id: 1,
-    title: 'Productividad Extrema en Mac para Devs',
-    description: 'Domina Raycast, Amphetamine, Atajos y más herramientas exclusivas de MacOS.',
-    image: null,
-    students: 2500,
-    rating: 4.8,
-    udemyLink: 'https://udemy.com',
-  },
-  {
-    id: 2,
-    title: 'Domina Git y Control de Versiones con Fork',
-    description: 'Aprende a realizar merges visuales y ten control total de tu código sn sufrir.',
-    image: null,
-    students: 1800,
-    rating: 4.9,
-    udemyLink: 'https://udemy.com',
-  },
-  {
-    id: 3,
-    title: 'Desarrollo de Temas en WordPress',
-    description: 'Crea temas profesionales desde cero, usa campos condicionales y personaliza el panel.',
-    image: null,
-    students: 3200,
-    rating: 4.7,
-    udemyLink: 'https://udemy.com',
-  },
-]
-
 export function CoursesSection() {
+  const { t, lang } = useLanguage()
+
+  const placeholderCourses = useMemo(
+    () => [
+      {
+        id: 1,
+        title: t('courses.placeholder1Title'),
+        description: t('courses.placeholder1Desc'),
+        image: null,
+        students: 2500,
+        rating: 4.8,
+        udemyLink: 'https://udemy.com',
+      },
+      {
+        id: 2,
+        title: t('courses.placeholder2Title'),
+        description: t('courses.placeholder2Desc'),
+        image: null,
+        students: 1800,
+        rating: 4.9,
+        udemyLink: 'https://udemy.com',
+      },
+      {
+        id: 3,
+        title: t('courses.placeholder3Title'),
+        description: t('courses.placeholder3Desc'),
+        image: null,
+        students: 3200,
+        rating: 4.7,
+        udemyLink: 'https://udemy.com',
+      },
+    ],
+    [t, lang]
+  )
+
   const displayCourses = courses.length > 0 ? courses : placeholderCourses
+  const numberLocale = lang === 'en' ? 'en-US' : 'es-ES'
 
   return (
     <section id="premium-courses" className="relative py-12 md:py-16">
@@ -49,19 +56,19 @@ export function CoursesSection() {
         <div className="text-center mb-16">
           <span className="inline-flex items-center gap-2 px-4 py-1.5 mb-6 text-xs font-medium uppercase tracking-wider text-muted-foreground border border-border/50 rounded-full">
             <Sparkles size={14} />
-            Cursos Premium
+            {t('courses.badge')}
           </span>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
             <span className="dark:gradient-text gradient-text-light">
-              Desarrolla habilidades
+              {t('courses.titleLine1')}
             </span>
             <br />
             <span className="text-muted-foreground">
-              listas para el mundo real
+              {t('courses.titleLine2')}
             </span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Aprende a trabajar como un profesional: desde tu entorno local, al control de tu código y la gestión de proyectos web.
+            {t('courses.description')}
           </p>
         </div>
 
@@ -89,7 +96,7 @@ export function CoursesSection() {
                 {/* Badge */}
                 {index === 0 && (
                   <div className="absolute top-4 left-4 px-3 py-1 text-xs font-medium bg-foreground text-background rounded-full">
-                    Most popular
+                    {t('courses.mostPopular')}
                   </div>
                 )}
               </div>
@@ -110,7 +117,7 @@ export function CoursesSection() {
                 <div className="flex items-center gap-4 mb-6 text-sm">
                   <div className="flex items-center gap-1.5 text-muted-foreground">
                     <Users size={16} />
-                    <span>{course.students?.toLocaleString() || '1000+'}</span>
+                    <span>{course.students?.toLocaleString(numberLocale) || '1000+'}</span>
                   </div>
                   <div className="flex items-center gap-1.5 text-muted-foreground">
                     <Star size={16} className="fill-yellow-400 text-yellow-400" />
@@ -129,7 +136,7 @@ export function CoursesSection() {
                     rel="noopener noreferrer"
                     className="flex items-center justify-center gap-2"
                   >
-                    Ver en Udemy
+                    {t('courses.ctaUdemy')}
                     <ArrowUpRight size={16} />
                   </a>
                 </Button>
@@ -141,7 +148,7 @@ export function CoursesSection() {
         {/* Note for placeholder courses */}
         {courses.length === 0 && (
           <p className="mt-10 text-center text-sm text-muted-foreground">
-            * Los cursos mostrados son de ejemplo. Los cursos reales se añadirán pronto.
+            {t('courses.placeholderNote')}
           </p>
         )}
       </div>

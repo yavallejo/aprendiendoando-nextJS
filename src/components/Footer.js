@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { Youtube, Twitter, Github, Linkedin } from 'lucide-react'
+import { useLanguage } from '@/components/LanguageProvider'
 
 const socialLinks = [
   { name: 'YouTube', icon: Youtube, href: 'https://www.youtube.com/@AprendiendoAndo' },
@@ -10,13 +11,15 @@ const socialLinks = [
   { name: 'LinkedIn', icon: Linkedin, href: 'https://linkedin.com/in/AprendiendoAndo' },
 ]
 
-const navigation = [
-  { name: 'Sobre mí', href: '#about-me' },
-  { name: 'Videos', href: '#videos' },
-  { name: 'Contacto', href: '#contact' },
+const NAV_ITEMS = [
+  { key: 'nav.about', href: '#about-me' },
+  { key: 'nav.videos', href: '#videos' },
+  { key: 'nav.contact', href: '#contact' },
 ]
 
 export function Footer() {
+  const { t } = useLanguage()
+
   return (
     <footer className="border-t border-border/50">
       <div className="max-w-6xl mx-auto px-6 py-12 md:py-16">
@@ -34,19 +37,19 @@ export function Footer() {
               AprendiendoAndo
             </Link>
             <p className="mt-3 text-sm text-muted-foreground">
-              Comunidad de desarrolladores aprendiendo y creciendo juntos.
+              {t('footer.tagline')}
             </p>
           </div>
 
           {/* Internal navigation links */}
           <nav className="flex flex-wrap gap-x-8 gap-y-4">
-            {navigation.map((item) => (
+            {NAV_ITEMS.map((item) => (
               <Link
-                key={item.name}
+                key={item.href}
                 href={item.href}
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 ease-out"
               >
-                {item.name}
+                {t(item.key)}
               </Link>
             ))}
           </nav>
@@ -71,10 +74,10 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="mt-10 pt-6 border-t border-border/30 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} AprendiendoAndo. Todos los derechos reservados.
+            © {new Date().getFullYear()} AprendiendoAndo. {t('footer.copyright')}
           </p>
           <p className="text-sm text-muted-foreground">
-            Hecho con <span className="text-red-500">♥</span> para la comunidad
+            {t('footer.madeWith')} <span className="text-red-500">♥</span> {t('footer.forCommunity')}
           </p>
         </div>
       </div>
